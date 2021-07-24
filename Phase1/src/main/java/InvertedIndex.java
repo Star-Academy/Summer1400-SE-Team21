@@ -1,6 +1,6 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class InvertedIndex {
     HashMap<String, String> allStuffs = new HashMap<>();
@@ -23,13 +23,33 @@ public class InvertedIndex {
                 } else {
                     ArrayList<String> docks = new ArrayList<>();
                     docks.add(entry.getKey());
-                    tokenizedWords.put(allWord, docks);
+                    tokenizedWords.put(allWord.toLowerCase(), docks);
                 }
             }
         }
 
+        removingStopWords();
+
+
+
         System.out.println(tokenizedWords);
 
+    }
+
+    public void removingStopWords (){
+        try {
+            File file = new File("StopWords");
+            Scanner sc = null;
+            sc = new Scanner(file);
+            sc.useDelimiter("\\Z");
+
+            String[] mustRemove = sc.next().split("-");
+            for (String s : mustRemove) {
+                tokenizedWords.remove(s);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
