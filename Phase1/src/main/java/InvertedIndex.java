@@ -72,8 +72,9 @@ public class InvertedIndex {
             if(!Character.isAlphabetic(string.charAt(i)))
                 continue;
             StringBuilder token = new StringBuilder();
-            while(Character.isAlphabetic(string.charAt(i))){
+            while(i<string.length() && Character.isAlphabetic(string.charAt(i))){
                 token.append(string.charAt(i));
+                i++;
             }
             tokens.add(token.toString());
         }
