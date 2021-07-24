@@ -31,11 +31,6 @@ public class InvertedIndex {
         }
 
         removingStopWords();
-
-
-
-        System.out.println(tokenizedWords);
-
     }
 
     public void removingStopWords (){
@@ -82,6 +77,7 @@ public class InvertedIndex {
     }
 
     public TreeSet<String> query(String input) {
+        input = input.toLowerCase();
         if(tokenizedWords.containsKey(input))
             return tokenizedWords.get(input);
         else
