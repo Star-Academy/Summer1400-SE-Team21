@@ -1,9 +1,9 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeSet;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.TreeSet;
 
 public class InvertedIndex {
     HashMap<String, String> allStuffs = new HashMap<>();
@@ -33,7 +33,7 @@ public class InvertedIndex {
         removingStopWords();
     }
 
-    public void removingStopWords (){
+    public void removingStopWords() {
         try {
             File file = new File("StopWords");
             Scanner sc = null;
@@ -51,9 +51,9 @@ public class InvertedIndex {
 
     private TreeSet<String> stem(TreeSet<String> tokens) {
         TreeSet<String> stemTokens = new TreeSet<>();
-        for(String token:tokens){
+        for (String token : tokens) {
             Stemmer stemmer = new Stemmer();
-            stemmer.add(token.toCharArray(),token.length());
+            stemmer.add(token.toCharArray(), token.length());
             stemmer.stem();
             String stemToken = stemmer.toString();
             stemTokens.add(stemToken);
@@ -63,12 +63,12 @@ public class InvertedIndex {
 
     private TreeSet<String> tokenize(String string) {
         TreeSet<String> tokens = new TreeSet<>();
-        for(int i =0 ;i <string.length();i++){
-            if(!Character.isAlphabetic(string.charAt(i)))
+        for (int i = 0; i < string.length(); i++) {
+            if (!Character.isAlphabetic(string.charAt(i)))
                 continue;
             StringBuilder token = new StringBuilder();
-            while(i<string.length() && Character.isAlphabetic(string.charAt(i))){
-                token.append(string.charAt(i));
+            while (i < string.length() && Character.isAlphabetic(string.charAt(i))) {
+                token.append(Character.toLowerCase(string.charAt(i)));
                 i++;
             }
             tokens.add(token.toString());
@@ -77,11 +77,77 @@ public class InvertedIndex {
     }
 
     public TreeSet<String> query(String input) {
-        input = input.toLowerCase();
-        if(tokenizedWords.containsKey(input))
-            return tokenizedWords.get(input);
+        TreeSet<String> andInputs = new TreeSet<>();
+        TreeSet<String> orInputs = new TreeSet<>();
+        TreeSet<String> removeInputs = new TreeSet<>();
+        TreeSet<String> userInputTokens = tokenizeUserInput(input);
+
+        for(String string:userInputTokens){
+            if(string.startsWith("+"))
+                orInputs.add(string.substring(1));
+            else if(string.startsWith("-"))
+                removeInputs.add(string.substring(1));
+            else
+                andInputs.add(string);
+        }
+
+        TreeSet<String> result = null;
+        for(String string:andInputs){
+            result = andWithWord(string,result);
+        }
+        for(String string:orInputs){
+            result = orWithWord(string,result);
+        }
+        for(String string:removeInputs){
+            result = removeWord(string,result);
+        }
+        if(result!=null)
+            return result;
         else
             return new TreeSet<>();
+    }
+
+    private TreeSet<String> removeWord(String word, TreeSet<String> list) {
+        TreeSet<String> wordList = getDocSet(word);
+        if(list==null){
+            return (TreeSet<String>) wordList.clone();
+        }
+        list.removeAll(wordList);
+        return list;
+    }
+
+    private TreeSet<String> orWithWord(String word, TreeSet<String> list) {
+        TreeSet<String> wordList = getDocSet(word);
+        if(list==null){
+            return (TreeSet<String>) wordList.clone();
+        }
+        list.addAll(wordList);
+        return list;
+    }
+
+    private TreeSet<String> andWithWord(String word, TreeSet<String> list) {
+        TreeSet<String> wordList = getDocSet(word);
+        if(list==null){
+            return (TreeSet<String>) wordList.clone();
+        }
+        list.retainAll(wordList);
+        return list;
+    }
+
+    private TreeSet<String> getDocSet(String word){
+        if(tokenizedWords.containsKey(word))
+            return tokenizedWords.get(word);
+        else
+            return new TreeSet<>();
+    }
+
+    private TreeSet<String> tokenizeUserInput(String input) {
+        TreeSet<String> tokens = new TreeSet<>();
+        String[] splitInput = input.split("\\s+");
+        for(String string:splitInput){
+            tokens.add(string.toLowerCase());
+        }
+        return tokens;
     }
 
     public static void main(String[] args) {
