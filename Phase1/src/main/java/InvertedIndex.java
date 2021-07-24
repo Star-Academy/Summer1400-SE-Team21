@@ -81,8 +81,27 @@ public class InvertedIndex {
         return tokens;
     }
 
+    public TreeSet<String> query(String input) {
+        if(tokenizedWords.containsKey(input))
+            return tokenizedWords.get(input);
+        else
+            return new TreeSet<>();
+    }
+
     public static void main(String[] args) {
         InvertedIndex invertedIndex = new InvertedIndex();
         invertedIndex.tokenizeFiles();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true){
+            String input = scanner.nextLine();
+            if(input.equals("exit"))
+                break;
+            TreeSet<String> containingDocs = invertedIndex.query(input);
+            if(containingDocs.isEmpty())
+                System.out.println("no doc found");
+            for(String docName:containingDocs)
+                System.out.println(docName);
+        }
     }
 }
