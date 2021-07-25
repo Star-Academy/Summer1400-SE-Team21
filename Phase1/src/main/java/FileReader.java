@@ -8,7 +8,7 @@ public class FileReader {
     HashMap<String, String> allStuffs = new HashMap<>();
 
     public HashMap<String, String> readingFiles (){
-        File folder = new File("EnglishData");
+        File folder = new File("Docks");
         listFilesForFolder(folder);
 
         return allStuffs;
