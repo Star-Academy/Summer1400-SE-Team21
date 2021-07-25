@@ -90,6 +90,9 @@ public class InvertedIndex {
             else
                 andInputs.add(string);
         }
+        andInputs = stem(andInputs);
+        orInputs = stem(orInputs);
+        removeInputs = stem(removeInputs);
 
         TreeSet<String> result = null;
         for(String string:andInputs){
