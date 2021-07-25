@@ -14,11 +14,10 @@ public class InvertedIndex {
         allStuffs = fileReader.readingFiles();
 
 
-
-        for(Map.Entry<String, String> entry : allStuffs.entrySet()) {
+        for (Map.Entry<String, String> entry : allStuffs.entrySet()) {
             String value = entry.getValue();
             TreeSet<String> rawAllWords = tokenize(value);
-            TreeSet<String> allWords = stem(rawAllWords);
+            TreeSet<String> allWords = processRawTokens(rawAllWords);
             for (String allWord : allWords) {
                 if (tokenizedWords.containsKey(allWord)) {
                     tokenizedWords.get(allWord).add(entry.getKey());
@@ -62,6 +61,12 @@ public class InvertedIndex {
         }
     }
 
+    private TreeSet<String> processRawTokens(TreeSet<String> rawTokens) {
+        removingStopWords(rawTokens);
+        rawTokens = stem(rawTokens);
+        return rawTokens;
+    }
+
     private TreeSet<String> stem(TreeSet<String> tokens) {
         TreeSet<String> stemTokens = new TreeSet<>();
         for (String token : tokens) {
@@ -95,29 +100,29 @@ public class InvertedIndex {
         TreeSet<String> removeInputs = new TreeSet<>();
         TreeSet<String> userInputTokens = tokenizeUserInput(input);
 
-        for(String string:userInputTokens){
-            if(string.startsWith("+"))
+        for (String string : userInputTokens) {
+            if (string.startsWith("+"))
                 orInputs.add(string.substring(1));
-            else if(string.startsWith("-"))
+            else if (string.startsWith("-"))
                 removeInputs.add(string.substring(1));
             else
                 andInputs.add(string);
         }
-        andInputs = stem(andInputs);
-        orInputs = stem(orInputs);
-        removeInputs = stem(removeInputs);
+        andInputs = processRawTokens(andInputs);
+        orInputs = processRawTokens(orInputs);
+        removeInputs = processRawTokens(removeInputs);
 
         TreeSet<String> result = null;
-        for(String string:andInputs){
-            result = andWithWord(string,result);
+        for (String string : andInputs) {
+            result = andWithWord(string, result);
         }
-        for(String string:orInputs){
-            result = orWithWord(string,result);
+        for (String string : orInputs) {
+            result = orWithWord(string, result);
         }
-        for(String string:removeInputs){
-            result = removeWord(string,result);
+        for (String string : removeInputs) {
+            result = removeWord(string, result);
         }
-        if(result!=null)
+        if (result != null)
             return result;
         else
             return new TreeSet<>();
@@ -125,7 +130,7 @@ public class InvertedIndex {
 
     private TreeSet<String> removeWord(String word, TreeSet<String> list) {
         TreeSet<String> wordList = getDocSet(word);
-        if(list==null){
+        if (list == null) {
             return (TreeSet<String>) wordList.clone();
         }
         list.removeAll(wordList);
@@ -134,7 +139,7 @@ public class InvertedIndex {
 
     private TreeSet<String> orWithWord(String word, TreeSet<String> list) {
         TreeSet<String> wordList = getDocSet(word);
-        if(list==null){
+        if (list == null) {
             return (TreeSet<String>) wordList.clone();
         }
         list.addAll(wordList);
@@ -143,15 +148,15 @@ public class InvertedIndex {
 
     private TreeSet<String> andWithWord(String word, TreeSet<String> list) {
         TreeSet<String> wordList = getDocSet(word);
-        if(list==null){
+        if (list == null) {
             return (TreeSet<String>) wordList.clone();
         }
         list.retainAll(wordList);
         return list;
     }
 
-    private TreeSet<String> getDocSet(String word){
-        if(tokenizedWords.containsKey(word))
+    private TreeSet<String> getDocSet(String word) {
+        if (tokenizedWords.containsKey(word))
             return tokenizedWords.get(word);
         else
             return new TreeSet<>();
@@ -160,7 +165,7 @@ public class InvertedIndex {
     private TreeSet<String> tokenizeUserInput(String input) {
         TreeSet<String> tokens = new TreeSet<>();
         String[] splitInput = input.split("\\s+");
-        for(String string:splitInput){
+        for (String string : splitInput) {
             tokens.add(string.toLowerCase());
         }
         return tokens;
