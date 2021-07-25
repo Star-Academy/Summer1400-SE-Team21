@@ -131,7 +131,7 @@ public class InvertedIndex {
     private TreeSet<String> removeWord(String word, TreeSet<String> list) {
         TreeSet<String> wordList = getDocSet(word);
         if (list == null) {
-            return (TreeSet<String>) wordList.clone();
+            return new TreeSet<>();
         }
         list.removeAll(wordList);
         return list;
