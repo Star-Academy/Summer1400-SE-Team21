@@ -30,10 +30,23 @@ public class InvertedIndex {
             }
         }
 
-        removingStopWords();
+//        removingStopWords();
     }
 
-    public void removingStopWords() {
+    public void removingStopWords(TreeSet<String> theTreeSet) {
+//        try {
+//            File file = new File("StopWords");
+//            Scanner sc = null;
+//            sc = new Scanner(file);
+//            sc.useDelimiter("\\Z");
+//
+//            String[] mustRemove = sc.next().split("-");
+//            for (String s : mustRemove) {
+//                tokenizedWords.remove(s);
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
         try {
             File file = new File("StopWords");
             Scanner sc = null;
@@ -42,7 +55,7 @@ public class InvertedIndex {
 
             String[] mustRemove = sc.next().split("-");
             for (String s : mustRemove) {
-                tokenizedWords.remove(s);
+                theTreeSet.remove(s);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
