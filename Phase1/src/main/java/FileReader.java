@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class FileReader {
     HashMap<String, String> allStuffs = new HashMap<>();
 
-    public HashMap<String, String> readingFiles (){
-        File folder = new File("Docks");
+    public HashMap<String, String> readingFiles (String foldrName){
+        File folder = new File(foldrName);
         listFilesForFolder(folder);
 
         return allStuffs;

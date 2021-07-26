@@ -1,15 +1,14 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.TreeSet;
 
 public class InvertedIndex {
     HashMap<String, String> allStuffs = new HashMap<>();
     HashMap<String, TreeSet<String>> tokenizedWords = new HashMap<>();
 
-    public void tokenizeFiles (){
+    public void tokenizeFiles (String folderName){
         FileReader fileReader = new FileReader();
-        allStuffs = fileReader.readingFiles();
+        allStuffs = fileReader.readingFiles(folderName);
 
 
         for (Map.Entry<String, String> entry : allStuffs.entrySet()) {
@@ -93,22 +92,5 @@ public class InvertedIndex {
             return tokenizedWords.get(word);
         else
             return new TreeSet<>();
-    }
-
-    public static void main(String[] args) {
-        InvertedIndex invertedIndex = new InvertedIndex();
-        invertedIndex.tokenizeFiles();
-        Scanner scanner = new Scanner(System.in);
-
-        while (true){
-            String input = scanner.nextLine();
-            if(input.equals("exit"))
-                break;
-            TreeSet<String> containingDocs = invertedIndex.query(input);
-            if(containingDocs.isEmpty())
-                System.out.println("no doc found");
-            for(String docName:containingDocs)
-                System.out.println(docName);
-        }
     }
 }
