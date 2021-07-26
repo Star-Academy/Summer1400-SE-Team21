@@ -46,13 +46,13 @@ public class InvertedIndex {
         UserInput userInput = new UserInput(input);
         TreeSet<String> result = null;
         for (String string : userInput.getAndInputs()) {
-            result = andWithWord(string, result);
+            result = andWordWithResult(string, result);
         }
         for (String string : userInput.getOrInputs()) {
-            result = orWithWord(string, result);
+            result = addWordToResult(string, result);
         }
         for (String string : userInput.getRemoveInputs()) {
-            result = removeWord(string, result);
+            result = removeWordFromResult(string, result);
         }
         if (result != null)
             return result;
@@ -60,8 +60,8 @@ public class InvertedIndex {
             return new TreeSet<>();
     }
 
-    private TreeSet<String> removeWord(String word, TreeSet<String> list) {
-        TreeSet<String> wordList = getDocSet(word);
+    private TreeSet<String> removeWordFromResult(String word, TreeSet<String> list) {
+        TreeSet<String> wordList = getDocsContainWord(word);
         if (list == null) {
             return new TreeSet<>();
         }
@@ -69,8 +69,8 @@ public class InvertedIndex {
         return list;
     }
 
-    private TreeSet<String> orWithWord(String word, TreeSet<String> list) {
-        TreeSet<String> wordList = getDocSet(word);
+    private TreeSet<String> addWordToResult(String word, TreeSet<String> list) {
+        TreeSet<String> wordList = getDocsContainWord(word);
         if (list == null) {
             return (TreeSet<String>) wordList.clone();
         }
@@ -78,8 +78,8 @@ public class InvertedIndex {
         return list;
     }
 
-    private TreeSet<String> andWithWord(String word, TreeSet<String> list) {
-        TreeSet<String> wordList = getDocSet(word);
+    private TreeSet<String> andWordWithResult(String word, TreeSet<String> list) {
+        TreeSet<String> wordList = getDocsContainWord(word);
         if (list == null) {
             return (TreeSet<String>) wordList.clone();
         }
@@ -87,7 +87,7 @@ public class InvertedIndex {
         return list;
     }
 
-    private TreeSet<String> getDocSet(String word) {
+    private TreeSet<String> getDocsContainWord(String word) {
         if (tokenizedWords.containsKey(word))
             return tokenizedWords.get(word);
         else
