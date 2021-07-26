@@ -60,31 +60,31 @@ public class InvertedIndex {
             return new TreeSet<>();
     }
 
-    private TreeSet<String> removeWordFromResult(String word, TreeSet<String> treeSet) {
+    private TreeSet<String> removeWordFromResult(String word, TreeSet<String> result) {
         TreeSet<String> wordList = getDocsContainWord(word);
-        if (treeSet == null) {
+        if (result == null) {
             return new TreeSet<>();
         }
-        treeSet.removeAll(wordList);
-        return treeSet;
+        result.removeAll(wordList);
+        return result;
     }
 
-    private TreeSet<String> addWordToResult(String word, TreeSet<String> treeSet) {
+    private TreeSet<String> addWordToResult(String word, TreeSet<String> result) {
         TreeSet<String> wordList = getDocsContainWord(word);
-        if (treeSet == null) {
+        if (result == null) {
             return (TreeSet<String>) wordList.clone();
         }
-        treeSet.addAll(wordList);
-        return treeSet;
+        result.addAll(wordList);
+        return result;
     }
 
-    private TreeSet<String> andWordWithResult(String word, TreeSet<String> treeSet) {
+    private TreeSet<String> andWordWithResult(String word, TreeSet<String> result) {
         TreeSet<String> wordList = getDocsContainWord(word);
-        if (treeSet == null) {
+        if (result == null) {
             return (TreeSet<String>) wordList.clone();
         }
-        treeSet.retainAll(wordList);
-        return treeSet;
+        result.retainAll(wordList);
+        return result;
     }
 
     private TreeSet<String> getDocsContainWord(String word) {
