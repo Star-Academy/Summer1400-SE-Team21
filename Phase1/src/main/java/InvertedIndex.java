@@ -1,5 +1,3 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -17,7 +15,7 @@ public class InvertedIndex {
         for (Map.Entry<String, String> entry : allStuffs.entrySet()) {
             String value = entry.getValue();
             TreeSet<String> rawAllWords = tokenize(value);
-            TreeSet<String> allWords = processRawTokens(rawAllWords);
+            TreeSet<String> allWords = StringUtils.processRawTokens(rawAllWords);
             for (String allWord : allWords) {
                 if (tokenizedWords.containsKey(allWord)) {
                     tokenizedWords.get(allWord).add(entry.getKey());
@@ -28,40 +26,6 @@ public class InvertedIndex {
                 }
             }
         }
-    }
-
-    public void removingStopWords(TreeSet<String> theTreeSet) {
-        try {
-            File file = new File("StopWords");
-            Scanner sc = null;
-            sc = new Scanner(file);
-            sc.useDelimiter("\\Z");
-
-            String[] mustRemove = sc.next().split("-");
-            for (String s : mustRemove) {
-                theTreeSet.remove(s);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private TreeSet<String> processRawTokens(TreeSet<String> rawTokens) {
-        removingStopWords(rawTokens);
-        rawTokens = stem(rawTokens);
-        return rawTokens;
-    }
-
-    private TreeSet<String> stem(TreeSet<String> tokens) {
-        TreeSet<String> stemTokens = new TreeSet<>();
-        for (String token : tokens) {
-            Stemmer stemmer = new Stemmer();
-            stemmer.add(token.toCharArray(), token.length());
-            stemmer.stem();
-            String stemToken = stemmer.toString();
-            stemTokens.add(stemToken);
-        }
-        return stemTokens;
     }
 
     private TreeSet<String> tokenize(String string) {
@@ -80,31 +44,15 @@ public class InvertedIndex {
     }
 
     public TreeSet<String> query(String input) {
-        TreeSet<String> andInputs = new TreeSet<>();
-        TreeSet<String> orInputs = new TreeSet<>();
-        TreeSet<String> removeInputs = new TreeSet<>();
-        TreeSet<String> userInputTokens = tokenizeUserInput(input);
-
-        for (String string : userInputTokens) {
-            if (string.startsWith("+"))
-                orInputs.add(string.substring(1));
-            else if (string.startsWith("-"))
-                removeInputs.add(string.substring(1));
-            else
-                andInputs.add(string);
-        }
-        andInputs = processRawTokens(andInputs);
-        orInputs = processRawTokens(orInputs);
-        removeInputs = processRawTokens(removeInputs);
-
+        UserInput userInput = new UserInput(input);
         TreeSet<String> result = null;
-        for (String string : andInputs) {
+        for (String string : userInput.getAndInputs()) {
             result = andWithWord(string, result);
         }
-        for (String string : orInputs) {
+        for (String string : userInput.getOrInputs()) {
             result = orWithWord(string, result);
         }
-        for (String string : removeInputs) {
+        for (String string : userInput.getRemoveInputs()) {
             result = removeWord(string, result);
         }
         if (result != null)
@@ -145,15 +93,6 @@ public class InvertedIndex {
             return tokenizedWords.get(word);
         else
             return new TreeSet<>();
-    }
-
-    private TreeSet<String> tokenizeUserInput(String input) {
-        TreeSet<String> tokens = new TreeSet<>();
-        String[] splitInput = input.split("\\s+");
-        for (String string : splitInput) {
-            tokens.add(string.toLowerCase());
-        }
-        return tokens;
     }
 
     public static void main(String[] args) {
