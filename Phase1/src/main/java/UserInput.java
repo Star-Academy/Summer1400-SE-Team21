@@ -1,9 +1,9 @@
 import java.util.TreeSet;
 
 public class UserInput {
-    private TreeSet<String> andInputs;
-    private TreeSet<String> orInputs;
-    private TreeSet<String> removeInputs;
+    private TreeSet<String> andInputs = new TreeSet<>();
+    private TreeSet<String> orInputs = new TreeSet<>();
+    private TreeSet<String> removeInputs = new TreeSet<>();
 
     public UserInput(String input) {
         TreeSet<String> userInputTokens = tokenizeUserInput(input);
