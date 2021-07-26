@@ -3,15 +3,15 @@ import java.util.Map;
 import java.util.TreeSet;
 
 public class InvertedIndex {
-    HashMap<String, String> allStuffs = new HashMap<>();
+    HashMap<String, String> allDocuments = new HashMap<>();
     HashMap<String, TreeSet<String>> tokenizedWords = new HashMap<>();
 
     public void tokenizeFiles (String folderName){
         FileReader fileReader = new FileReader();
-        allStuffs = fileReader.readingFiles(folderName);
+        allDocuments = fileReader.readingFiles(folderName);
 
 
-        for (Map.Entry<String, String> entry : allStuffs.entrySet()) {
+        for (Map.Entry<String, String> entry : allDocuments.entrySet()) {
             String value = entry.getValue();
             TreeSet<String> rawAllWords = tokenize(value);
             TreeSet<String> allWords = StringUtils.processRawTokens(rawAllWords);
@@ -60,31 +60,31 @@ public class InvertedIndex {
             return new TreeSet<>();
     }
 
-    private TreeSet<String> removeWordFromResult(String word, TreeSet<String> list) {
+    private TreeSet<String> removeWordFromResult(String word, TreeSet<String> treeSet) {
         TreeSet<String> wordList = getDocsContainWord(word);
-        if (list == null) {
+        if (treeSet == null) {
             return new TreeSet<>();
         }
-        list.removeAll(wordList);
-        return list;
+        treeSet.removeAll(wordList);
+        return treeSet;
     }
 
-    private TreeSet<String> addWordToResult(String word, TreeSet<String> list) {
+    private TreeSet<String> addWordToResult(String word, TreeSet<String> treeSet) {
         TreeSet<String> wordList = getDocsContainWord(word);
-        if (list == null) {
+        if (treeSet == null) {
             return (TreeSet<String>) wordList.clone();
         }
-        list.addAll(wordList);
-        return list;
+        treeSet.addAll(wordList);
+        return treeSet;
     }
 
-    private TreeSet<String> andWordWithResult(String word, TreeSet<String> list) {
+    private TreeSet<String> andWordWithResult(String word, TreeSet<String> treeSet) {
         TreeSet<String> wordList = getDocsContainWord(word);
-        if (list == null) {
+        if (treeSet == null) {
             return (TreeSet<String>) wordList.clone();
         }
-        list.retainAll(wordList);
-        return list;
+        treeSet.retainAll(wordList);
+        return treeSet;
     }
 
     private TreeSet<String> getDocsContainWord(String word) {

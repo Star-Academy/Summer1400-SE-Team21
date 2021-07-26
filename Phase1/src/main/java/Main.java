@@ -4,7 +4,7 @@ import java.util.TreeSet;
 public class Main {
     public static void main(String[] args) {
         InvertedIndex invertedIndex = new InvertedIndex();
-        invertedIndex.tokenizeFiles("Docks");
+        invertedIndex.tokenizeFiles("Docs");
         Scanner scanner = new Scanner(System.in);
 
         while (true){

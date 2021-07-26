@@ -7,8 +7,7 @@ public class StringUtils {
     public static void removingStopWords(TreeSet<String> theTreeSet) {
         try {
             File file = new File("StopWords");
-            Scanner sc = null;
-            sc = new Scanner(file);
+            Scanner sc = new Scanner(file);
             sc.useDelimiter("\\Z");
 
             String[] mustRemove = sc.next().split("-");
