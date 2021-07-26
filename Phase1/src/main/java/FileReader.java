@@ -23,10 +23,8 @@ public class FileReader {
                 try {
                     sc = new Scanner(fileEntry);
                     sc.useDelimiter("\\Z");
-                    try {
+                    if (sc.hasNext()){
                         fileNameToItsStuffs.put(fileEntry.getName(), sc.next().replaceAll("[\\t\\n\\r]+"," "));
-                    }catch (Exception e){
-
                     }
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
