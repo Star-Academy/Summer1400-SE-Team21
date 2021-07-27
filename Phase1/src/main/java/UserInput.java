@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.TreeSet;
 
 public class UserInput {
@@ -36,9 +37,7 @@ public class UserInput {
     private TreeSet<String> tokenizeUserInput(String input) {
         TreeSet<String> tokens = new TreeSet<>();
         String[] splitInput = input.split("\\s+");
-        for (String string : splitInput) {
-            tokens.add(string.toLowerCase());
-        }
+        Arrays.stream(splitInput).map(String::toLowerCase).forEach(tokens::add);
         return tokens;
     }
 }
