@@ -5,7 +5,7 @@ import java.util.TreeSet;
 public class InvertedIndex {
     HashMap<String, TreeSet<String>> tokenizedWords = new HashMap<>();
 
-    public void tokenizeFiles (HashMap<String, String> allDocuments){
+    public InvertedIndex tokenizeFiles (HashMap<String, String> allDocuments){
 
         for (Map.Entry<String, String> entry : allDocuments.entrySet()) {
             String value = entry.getValue();
@@ -21,6 +21,7 @@ public class InvertedIndex {
                 }
             }
         }
+        return this;
     }
 
     private TreeSet<String> tokenize(String string) {
