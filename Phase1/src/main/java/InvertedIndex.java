@@ -1,67 +1,27 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.TreeSet;
 
 public class InvertedIndex {
-    HashMap<String, String> allStuffs = new HashMap<>();
     HashMap<String, TreeSet<String>> tokenizedWords = new HashMap<>();
 
-    public void tokenizeFiles (){
-        FileReader fileReader = new FileReader();
-        allStuffs = fileReader.readingFiles();
+    public InvertedIndex tokenizeFiles (HashMap<String, String> allDocuments){
 
-
-        for (Map.Entry<String, String> entry : allStuffs.entrySet()) {
+        for (Map.Entry<String, String> entry : allDocuments.entrySet()) {
             String value = entry.getValue();
             TreeSet<String> rawAllWords = tokenize(value);
-            TreeSet<String> allWords = processRawTokens(rawAllWords);
-            for (String allWord : allWords) {
-                if (tokenizedWords.containsKey(allWord)) {
-                    tokenizedWords.get(allWord).add(entry.getKey());
+            TreeSet<String> allWords = StringUtils.processRawTokens(rawAllWords);
+            for (String word : allWords) {
+                if (tokenizedWords.containsKey(word)) {
+                    tokenizedWords.get(word).add(entry.getKey());
                 } else {
                     TreeSet<String> docks = new TreeSet<>();
                     docks.add(entry.getKey());
-                    tokenizedWords.put(allWord.toLowerCase(), docks);
+                    tokenizedWords.put(word.toLowerCase(), docks);
                 }
             }
         }
-    }
-
-    public void removingStopWords(TreeSet<String> theTreeSet) {
-        try {
-            File file = new File("StopWords");
-            Scanner sc = null;
-            sc = new Scanner(file);
-            sc.useDelimiter("\\Z");
-
-            String[] mustRemove = sc.next().split("-");
-            for (String s : mustRemove) {
-                theTreeSet.remove(s);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private TreeSet<String> processRawTokens(TreeSet<String> rawTokens) {
-        removingStopWords(rawTokens);
-        rawTokens = stem(rawTokens);
-        return rawTokens;
-    }
-
-    private TreeSet<String> stem(TreeSet<String> tokens) {
-        TreeSet<String> stemTokens = new TreeSet<>();
-        for (String token : tokens) {
-            Stemmer stemmer = new Stemmer();
-            stemmer.add(token.toCharArray(), token.length());
-            stemmer.stem();
-            String stemToken = stemmer.toString();
-            stemTokens.add(stemToken);
-        }
-        return stemTokens;
+        return this;
     }
 
     private TreeSet<String> tokenize(String string) {
@@ -79,33 +39,16 @@ public class InvertedIndex {
         return tokens;
     }
 
-    public TreeSet<String> query(String input) {
-        TreeSet<String> andInputs = new TreeSet<>();
-        TreeSet<String> orInputs = new TreeSet<>();
-        TreeSet<String> removeInputs = new TreeSet<>();
-        TreeSet<String> userInputTokens = tokenizeUserInput(input);
-
-        for (String string : userInputTokens) {
-            if (string.startsWith("+"))
-                orInputs.add(string.substring(1));
-            else if (string.startsWith("-"))
-                removeInputs.add(string.substring(1));
-            else
-                andInputs.add(string);
-        }
-        andInputs = processRawTokens(andInputs);
-        orInputs = processRawTokens(orInputs);
-        removeInputs = processRawTokens(removeInputs);
-
+    public TreeSet<String> query(UserInput input) {
         TreeSet<String> result = null;
-        for (String string : andInputs) {
-            result = andWithWord(string, result);
+        for (String string : input.getAndInputs()) {
+            result = andWordWithResult(string, result);
         }
-        for (String string : orInputs) {
-            result = orWithWord(string, result);
+        for (String string : input.getOrInputs()) {
+            result = addWordToResult(string, result);
         }
-        for (String string : removeInputs) {
-            result = removeWord(string, result);
+        for (String string : input.getRemoveInputs()) {
+            result = removeWordFromResult(string, result);
         }
         if (result != null)
             return result;
@@ -113,63 +56,37 @@ public class InvertedIndex {
             return new TreeSet<>();
     }
 
-    private TreeSet<String> removeWord(String word, TreeSet<String> list) {
-        TreeSet<String> wordList = getDocSet(word);
-        if (list == null) {
+    private TreeSet<String> removeWordFromResult(String word, TreeSet<String> result) {
+        TreeSet<String> wordList = getDocsContainWord(word);
+        if (result == null) {
             return new TreeSet<>();
         }
-        list.removeAll(wordList);
-        return list;
+        result.removeAll(wordList);
+        return result;
     }
 
-    private TreeSet<String> orWithWord(String word, TreeSet<String> list) {
-        TreeSet<String> wordList = getDocSet(word);
-        if (list == null) {
+    private TreeSet<String> addWordToResult(String word, TreeSet<String> result) {
+        TreeSet<String> wordList = getDocsContainWord(word);
+        if (result == null) {
             return (TreeSet<String>) wordList.clone();
         }
-        list.addAll(wordList);
-        return list;
+        result.addAll(wordList);
+        return result;
     }
 
-    private TreeSet<String> andWithWord(String word, TreeSet<String> list) {
-        TreeSet<String> wordList = getDocSet(word);
-        if (list == null) {
+    private TreeSet<String> andWordWithResult(String word, TreeSet<String> result) {
+        TreeSet<String> wordList = getDocsContainWord(word);
+        if (result == null) {
             return (TreeSet<String>) wordList.clone();
         }
-        list.retainAll(wordList);
-        return list;
+        result.retainAll(wordList);
+        return result;
     }
 
-    private TreeSet<String> getDocSet(String word) {
+    private TreeSet<String> getDocsContainWord(String word) {
         if (tokenizedWords.containsKey(word))
             return tokenizedWords.get(word);
         else
             return new TreeSet<>();
-    }
-
-    private TreeSet<String> tokenizeUserInput(String input) {
-        TreeSet<String> tokens = new TreeSet<>();
-        String[] splitInput = input.split("\\s+");
-        for (String string : splitInput) {
-            tokens.add(string.toLowerCase());
-        }
-        return tokens;
-    }
-
-    public static void main(String[] args) {
-        InvertedIndex invertedIndex = new InvertedIndex();
-        invertedIndex.tokenizeFiles();
-        Scanner scanner = new Scanner(System.in);
-
-        while (true){
-            String input = scanner.nextLine();
-            if(input.equals("exit"))
-                break;
-            TreeSet<String> containingDocs = invertedIndex.query(input);
-            if(containingDocs.isEmpty())
-                System.out.println("no doc found");
-            for(String docName:containingDocs)
-                System.out.println(docName);
-        }
     }
 }

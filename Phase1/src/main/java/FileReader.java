@@ -5,13 +5,13 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class FileReader {
-    HashMap<String, String> allStuffs = new HashMap<>();
+    HashMap<String, String> fileNameToItsStuffs = new HashMap<>();
 
-    public HashMap<String, String> readingFiles (){
-        File folder = new File("Docks");
+    public HashMap<String, String> readingFiles (String foldrName){
+        File folder = new File(foldrName);
         listFilesForFolder(folder);
 
-        return allStuffs;
+        return fileNameToItsStuffs;
     }
 
     public void listFilesForFolder(File folder) {
@@ -23,10 +23,8 @@ public class FileReader {
                 try {
                     sc = new Scanner(fileEntry);
                     sc.useDelimiter("\\Z");
-                    try {
-                        allStuffs.put(fileEntry.getName(), sc.next().replaceAll("[\\t\\n\\r]+"," "));
-                    }catch (Exception e){
-
+                    if (sc.hasNext()){
+                        fileNameToItsStuffs.put(fileEntry.getName(), sc.next().replaceAll("[\\t\\n\\r]+"," "));
                     }
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
