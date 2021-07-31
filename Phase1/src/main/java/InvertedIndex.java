@@ -43,16 +43,15 @@ public class InvertedIndex {
         return tokens;
     }
 
-    public TreeSet<String> query(String input) {
-        UserInput userInput = new UserInput(input);
+    public TreeSet<String> query(UserInput input) {
         TreeSet<String> result = null;
-        for (String string : userInput.getAndInputs()) {
+        for (String string : input.getAndInputs()) {
             result = andWordWithResult(string, result);
         }
-        for (String string : userInput.getOrInputs()) {
+        for (String string : input.getOrInputs()) {
             result = addWordToResult(string, result);
         }
-        for (String string : userInput.getRemoveInputs()) {
+        for (String string : input.getRemoveInputs()) {
             result = removeWordFromResult(string, result);
         }
         if (result != null)
