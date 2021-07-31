@@ -3,10 +3,9 @@ import java.util.Map;
 import java.util.TreeSet;
 
 public class InvertedIndex {
-    HashMap<String, String> allDocuments = new HashMap<>();
     HashMap<String, TreeSet<String>> tokenizedWords = new HashMap<>();
 
-    public void tokenizeFiles (){
+    public void tokenizeFiles (HashMap<String, String> allDocuments){
 
         for (Map.Entry<String, String> entry : allDocuments.entrySet()) {
             String value = entry.getValue();

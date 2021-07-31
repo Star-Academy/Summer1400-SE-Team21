@@ -7,8 +7,7 @@ public class SearchEngine {
     public void run(){
         FileReader fileReader = new FileReader();
         InvertedIndex invertedIndex = new InvertedIndex();
-        invertedIndex.allDocuments = fileReader.readingFiles(DOC_PATH);
-        invertedIndex.tokenizeFiles();
+        invertedIndex.tokenizeFiles(fileReader.readingFiles(DOC_PATH));
 
         Scanner scanner = new Scanner(System.in);
 
