@@ -5,7 +5,10 @@ public class SearchEngine {
     private final static String DOC_PATH = "Docs";
 
     public void run(){
-        InvertedIndex invertedIndex = new InvertedIndex().tokenizeFiles(DOC_PATH);
+        FileReader fileReader = new FileReader();
+        InvertedIndex invertedIndex = new InvertedIndex();
+        invertedIndex.allDocuments = fileReader.readingFiles(DOC_PATH);
+        invertedIndex.tokenizeFiles();
 
         Scanner scanner = new Scanner(System.in);
 

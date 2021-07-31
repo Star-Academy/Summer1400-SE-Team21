@@ -6,10 +6,7 @@ public class InvertedIndex {
     HashMap<String, String> allDocuments = new HashMap<>();
     HashMap<String, TreeSet<String>> tokenizedWords = new HashMap<>();
 
-    public InvertedIndex tokenizeFiles (String folderName){
-        FileReader fileReader = new FileReader();
-        allDocuments = fileReader.readingFiles(folderName);
-
+    public void tokenizeFiles (){
 
         for (Map.Entry<String, String> entry : allDocuments.entrySet()) {
             String value = entry.getValue();
@@ -25,7 +22,6 @@ public class InvertedIndex {
                 }
             }
         }
-        return this;
     }
 
     private TreeSet<String> tokenize(String string) {
