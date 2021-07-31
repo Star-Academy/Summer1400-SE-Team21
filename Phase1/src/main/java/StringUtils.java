@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.util.TreeSet;
 
 public class StringUtils {
-    public static void removingStopWords(TreeSet<String> theTreeSet) {
+    public static void removeStopWords(TreeSet<String> theTreeSet) {
         try {
             File file = new File("StopWords");
             Scanner sc = new Scanner(file);
@@ -22,7 +22,7 @@ public class StringUtils {
     }
 
     public static TreeSet<String> processRawTokens(TreeSet<String> rawTokens) {
-        removingStopWords(rawTokens);
+        removeStopWords(rawTokens);
         rawTokens = stem(rawTokens);
         return rawTokens;
     }

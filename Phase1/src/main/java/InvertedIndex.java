@@ -15,13 +15,13 @@ public class InvertedIndex {
             String value = entry.getValue();
             TreeSet<String> rawAllWords = tokenize(value);
             TreeSet<String> allWords = StringUtils.processRawTokens(rawAllWords);
-            for (String allWord : allWords) {
-                if (tokenizedWords.containsKey(allWord)) {
-                    tokenizedWords.get(allWord).add(entry.getKey());
+            for (String word : allWords) {
+                if (tokenizedWords.containsKey(word)) {
+                    tokenizedWords.get(word).add(entry.getKey());
                 } else {
                     TreeSet<String> docks = new TreeSet<>();
                     docks.add(entry.getKey());
-                    tokenizedWords.put(allWord.toLowerCase(), docks);
+                    tokenizedWords.put(word.toLowerCase(), docks);
                 }
             }
         }
