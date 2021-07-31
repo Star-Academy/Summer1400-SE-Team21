@@ -16,7 +16,8 @@ public class SearchEngine {
             String input = scanner.nextLine();
             if(input.equals("exit"))
                 break;
-            TreeSet<String> containingDocs = invertedIndex.query(input);
+            UserInput userInput = new UserInput(input);
+            TreeSet<String> containingDocs = invertedIndex.query(userInput);
             if(containingDocs.isEmpty())
                 System.out.println("no doc found");
             for(String docName:containingDocs)
