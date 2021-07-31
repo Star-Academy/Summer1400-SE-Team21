@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class FileReader {
@@ -15,7 +14,10 @@ public class FileReader {
     }
 
     public void listFilesForFolder(File folder) {
-        for (File fileEntry : Objects.requireNonNull(folder.listFiles())) {
+        File[] fileEntries = folder.listFiles();
+        if(fileEntries==null)
+            return;
+        for (File fileEntry : fileEntries) {
             if (fileEntry.isDirectory()) {
                 listFilesForFolder(fileEntry);
             } else {
