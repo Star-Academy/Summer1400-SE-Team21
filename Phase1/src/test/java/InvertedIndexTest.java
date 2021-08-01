@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -54,6 +55,16 @@ class InvertedIndexTest {
     void testLongQuery(){
         TreeSet<String> result = invertedIndex.query(new UserInput("thisWordIsTooLongAndThereShouldBeNoMatchDocInOurDatabase"));
         assertTrue(result.isEmpty());
+    }
+
+
+    @Test
+    public void invertedIndexSimpleTest (){
+        FileReader fileReader = new FileReader();
+        InvertedIndex invertedIndex = new InvertedIndex().tokenizeFiles(fileReader.readingFiles("src/test/DocsForTest"));
+
+        Assertions.assertTrue(invertedIndex.tokenizedWords.get("hello").contains("firstFile"));
+        Assertions.assertNull(invertedIndex.tokenizedWords.get("ali"));
     }
 
 }

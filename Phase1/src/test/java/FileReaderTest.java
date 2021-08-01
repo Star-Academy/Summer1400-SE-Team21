@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -33,5 +34,26 @@ class FileReaderTest {
         expected.put("complexFile1.txt","this is complexFile1");
         expected.put("complexFile2.txt","this is complexFile2");
         assertEquals(expected,content);
+    }
+
+
+    @Test
+    public void gettingFileAndReadIt (){
+        FileReader fileReader = new FileReader();
+        HashMap<String, String> files = fileReader.readingFiles("src/test/DocsForTest");
+
+        Assertions.assertTrue(files.containsKey("firstFile"));
+        Assertions.assertTrue(files.get("firstFile").startsWith("Hello Everyone"));
+    }
+
+
+    @Test
+    public void exceptionTest (){
+        FileReader fileReader = new FileReader();
+        try {
+            fileReader.readingFiles("noWhere");
+        }catch (Exception e){
+            Assertions.fail();
+        }
     }
 }
