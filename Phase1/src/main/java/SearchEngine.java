@@ -2,11 +2,20 @@ import java.util.Scanner;
 import java.util.TreeSet;
 
 public class SearchEngine {
-    private final static String DOC_PATH = "Docs";
+    private final static String DEFAULT_DOC_PATH = "Docs";
+    private String docPath;
+
+    public SearchEngine(){
+        docPath = DEFAULT_DOC_PATH;
+    }
+
+    public SearchEngine(String docPath){
+        this.docPath = docPath;
+    }
 
     public void run(){
         FileReader fileReader = new FileReader();
-        InvertedIndex invertedIndex = new InvertedIndex().tokenizeFiles(fileReader.readingFiles(DOC_PATH));
+        InvertedIndex invertedIndex = new InvertedIndex().tokenizeFiles(fileReader.readingFiles(docPath));
 
         Scanner scanner = new Scanner(System.in);
 
