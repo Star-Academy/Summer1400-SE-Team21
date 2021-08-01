@@ -1,10 +1,12 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.TreeSet;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,7 +29,8 @@ class UserInputTest {
 
     @Test
     public void queryTest (){
-        FileReader fileReader = new FileReader();
+        FileReader fileReader = Mockito.mock(FileReader.class);
+        Mockito.when(fileReader.readingFiles("src/test/DocsForTest")).thenReturn(dictionary());
         InvertedIndex invertedIndex = new InvertedIndex().tokenizeFiles(fileReader.readingFiles("src/test/DocsForTest"));
 
         UserInput userInput = new UserInput("everyone");
@@ -38,9 +41,17 @@ class UserInputTest {
     }
 
 
+    private HashMap<String, String> dictionary (){
+        HashMap<String, String> toReturn = new HashMap<>();
+        toReturn.put("firstFile", "Hello Everyone This Is Just For Test Hello! a cat is here");
+        return toReturn;
+    }
+
+
     @Test
     public void queryTest2 (){
-        FileReader fileReader = new FileReader();
+        FileReader fileReader = Mockito.mock(FileReader.class);
+        Mockito.when(fileReader.readingFiles("src/test/DocsForTest")).thenReturn(dictionary());
         InvertedIndex invertedIndex = new InvertedIndex().tokenizeFiles(fileReader.readingFiles("src/test/DocsForTest"));
 
         UserInput userInput = new UserInput("everyone +hello everyone -cat");
@@ -51,7 +62,8 @@ class UserInputTest {
 
     @Test
     public void queryTest3 (){
-        FileReader fileReader = new FileReader();
+        FileReader fileReader = Mockito.mock(FileReader.class);
+        Mockito.when(fileReader.readingFiles("src/test/DocsForTest")).thenReturn(dictionary());
         InvertedIndex invertedIndex = new InvertedIndex().tokenizeFiles(fileReader.readingFiles("src/test/DocsForTest"));
 
         UserInput userInput = new UserInput("dog");
@@ -77,7 +89,8 @@ class UserInputTest {
 
     @Test
     public void positiveTest (){
-        FileReader fileReader = new FileReader();
+        FileReader fileReader = Mockito.mock(FileReader.class);
+        Mockito.when(fileReader.readingFiles("src/test/DocsForTest")).thenReturn(dictionary());
         InvertedIndex invertedIndex = new InvertedIndex().tokenizeFiles(fileReader.readingFiles("src/test/DocsForTest"));
 
         UserInput userInput = new UserInput("+elephant");
@@ -88,7 +101,8 @@ class UserInputTest {
 
     @Test
     public void minusTest (){
-        FileReader fileReader = new FileReader();
+        FileReader fileReader = Mockito.mock(FileReader.class);
+        Mockito.when(fileReader.readingFiles("src/test/DocsForTest")).thenReturn(dictionary());
         InvertedIndex invertedIndex = new InvertedIndex().tokenizeFiles(fileReader.readingFiles("src/test/DocsForTest"));
 
         UserInput userInput = new UserInput("-elephant");
@@ -99,7 +113,8 @@ class UserInputTest {
 
     @Test
     public void emptyTest (){
-        FileReader fileReader = new FileReader();
+        FileReader fileReader = Mockito.mock(FileReader.class);
+        Mockito.when(fileReader.readingFiles("src/test/DocsForTest")).thenReturn(dictionary());
         InvertedIndex invertedIndex = new InvertedIndex().tokenizeFiles(fileReader.readingFiles("src/test/DocsForTest"));
 
         UserInput userInput = new UserInput(" ");

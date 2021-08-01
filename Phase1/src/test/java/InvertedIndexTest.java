@@ -1,7 +1,9 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -60,11 +62,19 @@ class InvertedIndexTest {
 
     @Test
     public void invertedIndexSimpleTest (){
-        FileReader fileReader = new FileReader();
+        FileReader fileReader = Mockito.mock(FileReader.class);
+        Mockito.when(fileReader.readingFiles("src/test/DocsForTest")).thenReturn(dictionary());
         InvertedIndex invertedIndex = new InvertedIndex().tokenizeFiles(fileReader.readingFiles("src/test/DocsForTest"));
 
         Assertions.assertTrue(invertedIndex.tokenizedWords.get("hello").contains("firstFile"));
         Assertions.assertNull(invertedIndex.tokenizedWords.get("ali"));
+    }
+
+
+    private HashMap<String, String> dictionary (){
+        HashMap<String, String> toReturn = new HashMap<>();
+        toReturn.put("firstFile", "Hello Everyone This Is Just For Test Hello! a cat is here");
+        return toReturn;
     }
 
 }
