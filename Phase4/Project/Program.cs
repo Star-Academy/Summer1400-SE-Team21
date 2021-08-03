@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace Project
+﻿namespace Project
 {
     class Program
     {
