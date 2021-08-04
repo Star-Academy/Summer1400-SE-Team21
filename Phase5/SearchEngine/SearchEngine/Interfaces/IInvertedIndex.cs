@@ -4,7 +4,7 @@ namespace SearchEngine
 {
     public interface IInvertedIndex
     {
-        IInvertedIndex TokenizeFiles(Dictionary<string, string> allDocuments);
+        InvertedIndex TokenizeFiles(Dictionary<string, string> allDocuments);
         SortedSet<string> Tokenize(string st);
         SortedSet<string> Query(UserInput input);
         SortedSet<string> RemoveWordFromResult(string word, SortedSet<string> result);
