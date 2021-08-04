@@ -18,7 +18,7 @@ namespace TestProject1
         [Fact]
         public void readSimpleFolder(){
             FileReader fileReader = new FileReader();
-            Dictionary<string, string> content = fileReader.ReadingFiles("../../../TestProject1/TestDocs/simpleFolder");
+            Dictionary<string, string> content = fileReader.ReadingFiles("../../TestDocs/simpleFolder");
             Dictionary<string, string> expected = new Dictionary<string, string>();
             expected.Add("simpleFile1.txt","this is simpleFile1");
             expected.Add("simpleFile2.txt","this is simpleFile2");

@@ -26,8 +26,7 @@ namespace SearchEngine
                         ListFilesForFolder(file);
                     else
                     {
-                        string[] splited = file.Split('\\');
-                        string fileName = splited[splited.Length - 1];
+                        string fileName = Path.GetFileName(file);
                         string[] lines = File.ReadAllLines(file);
                         string stuffs = "";
                         foreach (string line in lines)
