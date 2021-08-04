@@ -73,8 +73,10 @@ namespace TestProject1
 
         private Dictionary<string, string> ReturningDictionary()
         {
-            var toReturn = new Dictionary<string, string>();
-            toReturn.Add("firstFile", "Hello Everyone This Is Just For Test Hello! a cat is here");
+            var toReturn = new Dictionary<string, string>
+            {
+                {"firstFile", "Hello Everyone This Is Just For Test Hello! a cat is here"}
+            };
             return toReturn;
         }
         
@@ -88,6 +90,80 @@ namespace TestProject1
 
             Assert.Contains("firstFile", invertedIndex.tokenizedWords["hello"]);
             Assert.False(invertedIndex.tokenizedWords.ContainsKey("ali"));
+        }
+        
+        
+        [Fact]
+        public void QueryTest (){
+            IFileReader fileReader = Substitute.For<IFileReader>();
+            fileReader.ReadingFiles("../../../TestDocs/DocsForTest").Returns(ReturningDictionary());
+            InvertedIndex invertedIndex = new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles("../../../TestDocs/DocsForTest"));
+
+            UserInput userInput = new UserInput("everyone");
+            SortedSet<string> files = invertedIndex.Query(userInput);
+            Assert.False(!files.Any());
+            Assert.Equal("firstFile", files.ToList()[0]);
+            Assert.Single(files);
+        }
+        
+        
+        [Fact]
+        public void QueryTest2 (){
+            IFileReader fileReader = Substitute.For<IFileReader>();
+            fileReader.ReadingFiles("../../../TestDocs/DocsForTest").Returns(ReturningDictionary());
+            InvertedIndex invertedIndex = new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles("../../../TestDocs/DocsForTest"));
+
+            UserInput userInput = new UserInput("everyone +hello everyone -cat");
+            var files = invertedIndex.Query(userInput);
+            Assert.True(!files.Any());
+        }
+        
+        
+        [Fact]
+        public void QueryTest3 (){
+            IFileReader fileReader = Substitute.For<IFileReader>();
+            fileReader.ReadingFiles("../../../TestDocs/DocsForTest").Returns(ReturningDictionary());
+            InvertedIndex invertedIndex = new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles("../../../TestDocs/DocsForTest"));
+
+            UserInput userInput = new UserInput("dog");
+            var files = invertedIndex.Query(userInput);
+            Assert.True(!files.Any());
+        }
+        
+        
+        [Fact]
+        public void PositiveTest (){
+            IFileReader fileReader = Substitute.For<IFileReader>();
+            fileReader.ReadingFiles("../../../TestDocs/DocsForTest").Returns(ReturningDictionary());
+            InvertedIndex invertedIndex = new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles("../../../TestDocs/DocsForTest"));
+
+            UserInput userInput = new UserInput("+elephant");
+            var files = invertedIndex.Query(userInput);
+            Assert.True(!files.Any());
+        }
+        
+        
+        [Fact]
+        public void MinusTest (){
+            IFileReader fileReader = Substitute.For<IFileReader>();
+            fileReader.ReadingFiles("../../../TestDocs/DocsForTest").Returns(ReturningDictionary());
+            InvertedIndex invertedIndex = new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles("../../../TestDocs/DocsForTest"));
+
+            UserInput userInput = new UserInput("-elephant");
+            var files = invertedIndex.Query(userInput);
+            Assert.True(!files.Any());
+        }
+        
+        
+        [Fact]
+        public void EmptyTest (){
+            IFileReader fileReader = Substitute.For<IFileReader>();
+            fileReader.ReadingFiles("../../../TestDocs/DocsForTest").Returns(ReturningDictionary());
+            InvertedIndex invertedIndex = new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles("../../../TestDocs/DocsForTest"));
+
+            UserInput userInput = new UserInput(" ");
+            var files = invertedIndex.Query(userInput);
+            Assert.True(!files.Any());
         }
     }
 }
