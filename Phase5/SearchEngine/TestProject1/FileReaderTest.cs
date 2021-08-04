@@ -18,7 +18,7 @@ namespace TestProject1
         [Fact]
         public void readSimpleFolder(){
             FileReader fileReader = new FileReader();
-            Dictionary<string, string> content = fileReader.ReadingFiles("../../TestDocs/simpleFolder");
+            Dictionary<string, string> content = fileReader.ReadingFiles("../../../TestDocs/simpleFolder");
             Dictionary<string, string> expected = new Dictionary<string, string>();
             expected.Add("simpleFile1.txt","this is simpleFile1");
             expected.Add("simpleFile2.txt","this is simpleFile2");
@@ -28,7 +28,7 @@ namespace TestProject1
         [Fact]
         public void readComplexFolder(){
             FileReader fileReader = new FileReader();
-            Dictionary<string, string> content = fileReader.ReadingFiles("../../../TestProject1/TestDocs/complexFolder");
+            Dictionary<string, string> content = fileReader.ReadingFiles("../../../TestDocs/complexFolder");
             Dictionary<string, string> expected = new Dictionary<string, string>();
             expected.Add("childFile1.txt","this is childFile1");
             expected.Add("childFile2.txt","this is childFile2");
@@ -41,7 +41,7 @@ namespace TestProject1
         [Fact]
         public void gettingFileAndReadIt (){
             FileReader fileReader = new FileReader();
-            Dictionary<string, string> files = fileReader.ReadingFiles("../../../TestProject1/TestDocs/DocsForTest");
+            Dictionary<string, string> files = fileReader.ReadingFiles("../../../TestDocs/DocsForTest");
 
             Assert.True(files.ContainsKey("firstFile"));
             Assert.True(files["firstFile"].StartsWith("Hello Everyone"));
