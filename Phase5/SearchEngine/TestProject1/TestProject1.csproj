@@ -65,6 +65,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="FileReaderTest.cs" />
         <Compile Include="StringUtilsTest.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="UserInputTest.cs" />
@@ -77,6 +78,36 @@
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="TestDocs\complexFolder\childFolder\childFile1.txt" />
+      <Content Include="TestDocs\complexFolder\childFolder\childFile2.txt" />
+      <Content Include="TestDocs\complexFolder\complexFile1.txt" />
+      <Content Include="TestDocs\complexFolder\complexFile2.txt" />
+      <Content Include="TestDocs\DocsForTest\firstFile" />
+      <Content Include="TestDocs\Doc\InnerDoc\Temp3" />
+      <Content Include="TestDocs\Doc\Temp" />
+      <Content Include="TestDocs\Doc\Temp2" />
+      <Content Include="TestDocs\simpleFolder\simpleFile1.txt" />
+      <Content Include="TestDocs\simpleFolder\simpleFile2.txt" />
+      <Content Include="TestDocs\testDocs\59631.txt" />
+      <Content Include="TestDocs\testDocs\59632.txt" />
+      <Content Include="TestDocs\testDocs\59633.txt" />
+      <Content Include="TestDocs\testDocs\59634.txt" />
+      <Content Include="TestDocs\testDocs\59635.txt" />
+      <Content Include="TestDocs\testDocs\59636.txt" />
+      <Content Include="TestDocs\testDocs\59637.txt" />
+      <Content Include="TestDocs\testDocs\59638.txt" />
+      <Content Include="TestDocs\testDocs\59639.txt" />
+      <Content Include="TestDocs\testDocs\59640.txt" />
+      <Content Include="TestDocs\testDocs\59641.txt" />
+      <Content Include="TestDocs\testDocs\59642.txt" />
+      <Content Include="TestDocs\testDocs\59643.txt" />
+      <Content Include="TestDocs\testDocs\59644.txt" />
+      <Content Include="TestDocs\testDocs\59645.txt" />
+      <Content Include="TestDocs\testDocs\59646.txt" />
+      <Content Include="TestDocs\testDocs\59648.txt" />
+      <Content Include="TestDocs\testDocs\59652.txt" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
