@@ -12,9 +12,9 @@ namespace SearchEngine
 
         public UserInput(string input)
         {
-            SortedSet<string> userInputTokens = TokenizeUserInput(input);
+            var userInputTokens = TokenizeUserInput(input);
 
-            foreach (string token in userInputTokens) {
+            foreach (var token in userInputTokens) {
                 if (token.StartsWith("+"))
                     _orInputs.Add(token.Substring(1));
                 else if (token.StartsWith("-"))
@@ -42,9 +42,9 @@ namespace SearchEngine
             return _removeInputs;
         }
 
-        private SortedSet<string> TokenizeUserInput(string input)
+        private static SortedSet<string> TokenizeUserInput(string input)
         {
-            SortedSet<string> tokens = new SortedSet<string>();
+            var tokens = new SortedSet<string>();
             var splitInput = Regex.Split(input, "\\s+");
             splitInput.Select(s => s.ToLower()).ToList().ForEach(token => tokens.Add(token));
             return tokens;

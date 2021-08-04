@@ -22,7 +22,7 @@ namespace SearchEngine
         public static SortedSet<string> Stem(SortedSet<string> tokens)
         {
             var stemTokens = new SortedSet<string>();
-            EnglishPorter2Stemmer stemmer = new EnglishPorter2Stemmer();
+            var stemmer = new EnglishPorter2Stemmer();
             tokens.ToList().ForEach(token => stemTokens.Add(stemmer.Stem(token).Value));
             return stemTokens;
         }

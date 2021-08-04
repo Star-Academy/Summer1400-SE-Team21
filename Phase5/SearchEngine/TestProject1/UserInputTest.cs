@@ -9,12 +9,12 @@ namespace TestProject1
         [Fact]
         public void SimpleInputTest()
         {
-            string input = "hello this +fine -cats";
-            UserInput userInput = new UserInput(input);
+            const string input = "hello this +fine -cats";
+            var userInput = new UserInput(input);
 
-            SortedSet<string> expectedAndInput = new SortedSet<string> { "hello" };
-            SortedSet<string> expectedOrInput = new SortedSet<string> { "fine" };
-            SortedSet<string> expectedRemoveInput = new SortedSet<string> { "cat" };
+            var expectedAndInput = new SortedSet<string> { "hello" };
+            var expectedOrInput = new SortedSet<string> { "fine" };
+            var expectedRemoveInput = new SortedSet<string> { "cat" };
 
             Assert.Equal(expectedAndInput, userInput.GetAndInputs());
             Assert.Equal(expectedOrInput, userInput.GetOrInputs());
