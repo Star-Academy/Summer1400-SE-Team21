@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SearchEngine
@@ -11,25 +12,37 @@ namespace SearchEngine
         
         public InvertedIndex TokenizeFiles(Dictionary<string, string> allDocuments)
         {
-            foreach(KeyValuePair<string, string> entry in allDocuments)
-            {
-                string value = entry.Value;
-                SortedSet<string> rawAllWords = Tokenize(value);
-                SortedSet<string> allWords = StringUtils.ProcessRawTokens(rawAllWords);
-                foreach (var word in allWords)
+            // foreach(KeyValuePair<string, string> entry in allDocuments)
+            // {
+            //     string value = entry.Value;
+            //     SortedSet<string> rawAllWords = Tokenize(value);
+            //     SortedSet<string> allWords = StringUtils.ProcessRawTokens(rawAllWords);
+            //     foreach (var word in allWords)
+            //     {
+            //         if (tokenizedWords.ContainsKey(word))
+            //         {
+            //             tokenizedWords[word].Add(entry.Key);
+            //         }
+            //         else
+            //         {
+            //             SortedSet<string> docks = new SortedSet<string>();
+            //             docks.Add(entry.Key);
+            //             tokenizedWords.Add(word.ToLower(), docks);
+            //         }
+            //     }
+            // }
+            
+            allDocuments.ToList().ForEach(pair => StringUtils.ProcessRawTokens(Tokenize(pair.Value)).ToList().ForEach(
+                word =>
                 {
-                    if (tokenizedWords.ContainsKey(word))
-                    {
-                        tokenizedWords[word].Add(entry.Key);
-                    }
+                    if (tokenizedWords.ContainsKey(word)) tokenizedWords[word].Add(pair.Key);
                     else
                     {
                         SortedSet<string> docks = new SortedSet<string>();
-                        docks.Add(entry.Key);
+                        docks.Add(pair.Key);
                         tokenizedWords.Add(word.ToLower(), docks);
                     }
-                }
-            }
+                }));
 
             return this;
         }
@@ -55,20 +68,27 @@ namespace SearchEngine
 
         public SortedSet<string> Query(UserInput input)
         {
-            SortedSet<string> result = null;
-            foreach (var st in input.GetAndInputs())
-            {
-                result = AddWordToResult(st, result);
-            }
-            foreach (var st in input.GetOrInputs())
-            {
-                result = AddWordToResult(st, result);
-            }
-            foreach (var st in input.GetRemoveInputs())
-            {
-                result = RemoveWordFromResult(st, result);
-            }
+            // SortedSet<string> result = null;
+            // foreach (var st in input.GetAndInputs())
+            // {
+            //     result = AddWordToResult(st, result);
+            // }
+            // foreach (var st in input.GetOrInputs())
+            // {
+            //     result = AddWordToResult(st, result);
+            // }
+            // foreach (var st in input.GetRemoveInputs())
+            // {
+            //     result = RemoveWordFromResult(st, result);
+            // }
+            //
+            // if (result != null) return result;
+            // else return new SortedSet<string>();
 
+            SortedSet<string> result = null;
+            input.GetAndInputs().ToList().ForEach(st => result = AndWordWithResult(st, result));
+            input.GetOrInputs().ToList().ForEach(st => result = AddWordToResult(st, result));
+            input.GetRemoveInputs().ToList().ForEach(st => result = RemoveWordFromResult(st, result));
             if (result != null) return result;
             else return new SortedSet<string>();
         }
@@ -106,11 +126,12 @@ namespace SearchEngine
         public SortedSet<string> CloneSortedSet(SortedSet<string> toClone)
         {
             SortedSet<string> clonable = new SortedSet<string>();
-            foreach (var st in toClone)
-            {
-                clonable.Add(st);
-            }
-            return toClone;
+            // foreach (var st in toClone)
+            // {
+            //     clonable.Add(st);
+            // }
+            toClone.ToList().ForEach(st => clonable.Add(st));
+            return clonable;
         }
     }
 }
