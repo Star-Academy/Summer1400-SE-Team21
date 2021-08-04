@@ -16,7 +16,7 @@ namespace TestProject1
         }
 
         [Fact]
-        public void readSimpleFolder(){
+        public void ReadSimpleFolder(){
             FileReader fileReader = new FileReader();
             Dictionary<string, string> content = fileReader.ReadingFiles("../../../TestDocs/simpleFolder");
             Dictionary<string, string> expected = new Dictionary<string, string>();
@@ -26,7 +26,7 @@ namespace TestProject1
         }
 
         [Fact]
-        public void readComplexFolder(){
+        public void ReadComplexFolder(){
             FileReader fileReader = new FileReader();
             Dictionary<string, string> content = fileReader.ReadingFiles("../../../TestDocs/complexFolder");
             Dictionary<string, string> expected = new Dictionary<string, string>();
@@ -39,7 +39,7 @@ namespace TestProject1
 
 
         [Fact]
-        public void gettingFileAndReadIt (){
+        public void GettingFileAndReadIt (){
             FileReader fileReader = new FileReader();
             Dictionary<string, string> files = fileReader.ReadingFiles("../../../TestDocs/DocsForTest");
 
