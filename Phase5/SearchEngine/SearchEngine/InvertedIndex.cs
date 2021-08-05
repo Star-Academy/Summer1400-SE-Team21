@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SearchEngine.Interfaces;
 
 namespace SearchEngine
 {
@@ -10,7 +11,7 @@ namespace SearchEngine
         public Dictionary<string, SortedSet<string>> tokenizedWords { get; set; } = new Dictionary<string, SortedSet<string>>();
         
         
-        public InvertedIndex TokenizeFiles(Dictionary<string, string> allDocuments)
+        public IInvertedIndex TokenizeFiles(Dictionary<string, string> allDocuments)
         {
             // foreach(KeyValuePair<string, string> entry in allDocuments)
             // {
@@ -66,7 +67,7 @@ namespace SearchEngine
             return tokens;
         }
 
-        public SortedSet<string> Query(UserInput input)
+        public SortedSet<string> Query(IUserInput input)
         {
             // SortedSet<string> result = null;
             // foreach (var st in input.GetAndInputs())
