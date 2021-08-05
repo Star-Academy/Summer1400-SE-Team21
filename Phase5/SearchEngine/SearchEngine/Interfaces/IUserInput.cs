@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace SearchEngine
+namespace SearchEngine.Interfaces
 {
     public interface IUserInput
     {

@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 
-namespace SearchEngine
+namespace SearchEngine.Interfaces
 {
     public interface IInvertedIndex
     {
-        IInvertedIndex tokenizeFiles(Dictionary<string, string> allDocuments);
-        SortedSet<string> tokenize(string st);
-        SortedSet<string> query(UserInput input);
-        SortedSet<string> removeWordFromResult(string word, SortedSet<string> result);
-        SortedSet<string> addWordToResult(string word, SortedSet<string> result);
-        SortedSet<string> andWordWithResult(string word, SortedSet<string> result);
-        SortedSet<string> getDocsContainWord(string word);
+        IInvertedIndex TokenizeFiles(Dictionary<string, string> allDocuments);
+        SortedSet<string> Tokenize(string st);
+        SortedSet<string> Query(IUserInput input);
+        SortedSet<string> RemoveWordFromResult(string word, SortedSet<string> result);
+        SortedSet<string> AddWordToResult(string word, SortedSet<string> result);
+        SortedSet<string> AndWordWithResult(string word, SortedSet<string> result);
+        SortedSet<string> GetDocsContainWord(string word);
     }
 }
