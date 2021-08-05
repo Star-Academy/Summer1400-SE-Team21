@@ -16,10 +16,10 @@ namespace Project
 
         private List<Student> GetRankedStudents()
         {
-            return _students.OrderByDescending(student => GetStudentScore(student)).ToList();
+            return _students.OrderByDescending(student => GetStudentAverage(student)).ToList();
         }
 
-        private float GetStudentScore(Student student)
+        private float GetStudentAverage(Student student)
         {
             return _scores.Where(score => score.StudentNumber == student.StudentNumber).Select(score => score.Score).Average();
         }
@@ -31,7 +31,7 @@ namespace Project
 
         private List<float> GetRankedStudentsScores()
         {
-            return GetRankedStudents().Select(student => GetStudentScore(student)).ToList();
+            return GetRankedStudents().Select(student => GetStudentAverage(student)).ToList();
         }
 
         public List<float> GetNTopStudentsScores(int n)
