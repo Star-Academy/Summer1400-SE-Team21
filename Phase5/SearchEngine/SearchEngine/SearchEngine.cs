@@ -21,7 +21,7 @@ namespace SearchEngine
             while (true)
             {
                 string input = _reader.Read();
-                if (input == "exit")
+                if (IsFinished(input))
                     break;
                 UserInput userInput = new UserInput(input);
                 SortedSet<string> containingDocs = _invertedIndex.Query(userInput);
@@ -30,6 +30,11 @@ namespace SearchEngine
                 foreach (var docName in containingDocs)
                     _writer.Write(docName);
             }
+        }
+
+        private static bool IsFinished(string input)
+        {
+            return input is null or "exit";
         }
     }
 }

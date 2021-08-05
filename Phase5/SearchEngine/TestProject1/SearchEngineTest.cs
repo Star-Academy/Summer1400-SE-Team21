@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NSubstitute;
 using SearchEngine.Interfaces;
@@ -46,6 +47,19 @@ namespace TestProject1
             Assert.Equal(expectedOutput, writer.AllOutput);
         }
 
+        [Fact]
+        public void TestWithNoInput()
+        {
+            var reader = new CustomInput("");
+            var writer = new CustomOutput();
+            var invertedIndex = GetInvertedIndex();
+            var searchEngine =
+                new SearchEngine.SearchEngine(reader, writer, invertedIndex);
+            searchEngine.Run();
+            const string expectedOutput = "";
+            Assert.Equal(expectedOutput, writer.AllOutput);
+        }
+
         private static IInvertedIndex GetInvertedIndex()
         {
             var invertedIndex = Substitute.For<IInvertedIndex>();
@@ -72,7 +86,7 @@ namespace TestProject1
 
         public CustomInput(string input)
         {
-            _inputs = input.Split('\n');
+            _inputs = string.IsNullOrEmpty(input) ? Array.Empty<string>() : input.Split('\n');
             _counter = 0;
         }
 
@@ -80,7 +94,7 @@ namespace TestProject1
         {
             if (_counter < _inputs.Length)
                 return _inputs[_counter++];
-            return "";
+            return null;
         }
     }
 

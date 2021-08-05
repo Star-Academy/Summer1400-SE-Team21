@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -15,7 +16,8 @@ namespace SearchEngine
         {
             var userInputTokens = TokenizeUserInput(input);
 
-            foreach (var token in userInputTokens) {
+            foreach (var token in userInputTokens)
+            {
                 if (token.StartsWith("+"))
                     _orInputs.Add(token.Substring(1));
                 else if (token.StartsWith("-"))
@@ -23,6 +25,7 @@ namespace SearchEngine
                 else
                     _andInputs.Add(token);
             }
+
             _andInputs = StringUtils.ProcessRawTokens(_andInputs);
             _orInputs = StringUtils.ProcessRawTokens(_orInputs);
             _removeInputs = StringUtils.ProcessRawTokens(_removeInputs);
@@ -46,7 +49,7 @@ namespace SearchEngine
         private static SortedSet<string> TokenizeUserInput(string input)
         {
             var tokens = new SortedSet<string>();
-            var splitInput = Regex.Split(input, "\\s+");
+            var splitInput = string.IsNullOrEmpty(input) ? Array.Empty<string>() : Regex.Split(input, "\\s+");
             splitInput.Select(s => s.ToLower()).ToList().ForEach(token => tokens.Add(token));
             return tokens;
         }
