@@ -53,7 +53,7 @@ namespace SearchEngine
             {
                 if (!char.IsLetter(st[i])) continue;
                 StringBuilder token = new StringBuilder();
-                while (i < st.Length && char.IsLetter(st[i]))
+                while (i < st.Length && char.IsLetterOrDigit(st[i]))
                 {
                     token.Append(char.ToLower(st[i]));
                     i++;
