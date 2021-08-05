@@ -12,11 +12,20 @@ namespace Project
         {
             _students = students;
             _scores = scores;
+            CalculateAverages();
+        }
+
+        private void CalculateAverages()
+        {
+            foreach (var student in _students)
+            {
+                student.Average = GetStudentAverage(student);
+            }
         }
 
         private List<Student> GetRankedStudents()
         {
-            return _students.OrderByDescending(student => GetStudentAverage(student)).ToList();
+            return _students.OrderByDescending(student => student.Average).ToList();
         }
 
         private float GetStudentAverage(Student student)
@@ -27,16 +36,6 @@ namespace Project
         public List<Student> GetNTopStudents(int n)
         {
             return GetRankedStudents().Take(n).ToList();
-        }
-
-        private List<float> GetRankedStudentsScores()
-        {
-            return GetRankedStudents().Select(student => GetStudentAverage(student)).ToList();
-        }
-
-        public List<float> GetNTopStudentsScores(int n)
-        {
-            return GetRankedStudentsScores().Take(n).ToList();
         }
     }
 }

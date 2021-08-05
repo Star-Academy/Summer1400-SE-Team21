@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace Project
 {
@@ -7,19 +8,16 @@ namespace Project
         private const string StudentsJsonPath = "Students.json";
         private const string ScoresJsonPath = "Scores.json";
         private const int TopListSize = 3;
-        public void run()
+        public void Run()
         {
             var students = JsonFileReader.Read<Student[]>(StudentsJsonPath);
             var scores = JsonFileReader.Read<StudentScore[]>(ScoresJsonPath);
-            Ranker ranker = new Ranker(students, scores);
+            var ranker = new Ranker(students, scores);
 
             var topStudents = ranker.GetNTopStudents(TopListSize);
-            var topStudentsScore = ranker.GetNTopStudentsScores(TopListSize);
-            for (int i = 0; i < topStudents.Count; i++)
+            foreach (var student in topStudents)
             {
-                var student = topStudents[i];
-                var score = topStudentsScore[i];
-                Console.WriteLine(student.FirstName + " " + student.LastName + " " + score);
+                Console.WriteLine(student.FirstName + " " + student.LastName + " " + student.Average);
             }
         }
     }

@@ -5,5 +5,6 @@ namespace Project
         public int StudentNumber {get;set;}
         public string FirstName {get;set;}
         public string LastName {get;set;}
+        public float Average { get; set; }
     }
 }

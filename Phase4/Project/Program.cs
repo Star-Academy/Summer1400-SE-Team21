@@ -4,7 +4,7 @@
     {
         static void Main()
         {
-            new Manager().run();
+            new Manager().Run();
         }
     }
 }
