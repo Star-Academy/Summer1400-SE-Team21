@@ -5,11 +5,6 @@ namespace SearchEngine.Interfaces
     public interface IInvertedIndex
     {
         IInvertedIndex TokenizeFiles(Dictionary<string, string> allDocuments);
-        SortedSet<string> Tokenize(string st);
         SortedSet<string> Query(IUserInput input);
-        SortedSet<string> RemoveWordFromResult(string word, SortedSet<string> result);
-        SortedSet<string> AddWordToResult(string word, SortedSet<string> result);
-        SortedSet<string> AndWordWithResult(string word, SortedSet<string> result);
-        SortedSet<string> GetDocsContainWord(string word);
     }
 }

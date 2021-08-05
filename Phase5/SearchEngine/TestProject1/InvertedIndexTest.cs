@@ -9,6 +9,8 @@ namespace TestProject1
 {
     public class InvertedIndexTest
     {
+        private const string Path = "../../../TestDocs/DocsForTest";
+
         [Fact]
         public void TestSimpleInvertedIndex()
         {
@@ -86,19 +88,19 @@ namespace TestProject1
         public void InvertedIndexSimpleTest()
         {
             IFileReader fileReader = Substitute.For<IFileReader>();
-            fileReader.ReadingFiles("../../../TestDocs/DocsForTest").Returns(ReturningDictionary());
-            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles("../../../TestDocs/DocsForTest"));
+            fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
+            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles(Path));
 
-            Assert.Contains("firstFile", invertedIndex.tokenizedWords["hello"]);
-            Assert.False(invertedIndex.tokenizedWords.ContainsKey("ali"));
+            Assert.Contains("firstFile", invertedIndex.TokenizedWords["hello"]);
+            Assert.False(invertedIndex.TokenizedWords.ContainsKey("ali"));
         }
         
         
         [Fact]
         public void QueryTest (){
             IFileReader fileReader = Substitute.For<IFileReader>();
-            fileReader.ReadingFiles("../../../TestDocs/DocsForTest").Returns(ReturningDictionary());
-            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles("../../../TestDocs/DocsForTest"));
+            fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
+            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles(Path));
 
             UserInput userInput = new UserInput("everyone");
             SortedSet<string> files = invertedIndex.Query(userInput);
@@ -111,8 +113,8 @@ namespace TestProject1
         [Fact]
         public void QueryTest2 (){
             IFileReader fileReader = Substitute.For<IFileReader>();
-            fileReader.ReadingFiles("../../../TestDocs/DocsForTest").Returns(ReturningDictionary());
-            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles("../../../TestDocs/DocsForTest"));
+            fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
+            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles(Path));
 
             UserInput userInput = new UserInput("everyone +hello everyone -cat");
             var files = invertedIndex.Query(userInput);
@@ -123,8 +125,8 @@ namespace TestProject1
         [Fact]
         public void QueryTest3 (){
             IFileReader fileReader = Substitute.For<IFileReader>();
-            fileReader.ReadingFiles("../../../TestDocs/DocsForTest").Returns(ReturningDictionary());
-            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles("../../../TestDocs/DocsForTest"));
+            fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
+            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles(Path));
 
             UserInput userInput = new UserInput("dog");
             var files = invertedIndex.Query(userInput);
@@ -135,8 +137,8 @@ namespace TestProject1
         [Fact]
         public void PositiveTest (){
             IFileReader fileReader = Substitute.For<IFileReader>();
-            fileReader.ReadingFiles("../../../TestDocs/DocsForTest").Returns(ReturningDictionary());
-            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles("../../../TestDocs/DocsForTest"));
+            fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
+            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles(Path));
 
             UserInput userInput = new UserInput("+elephant");
             var files = invertedIndex.Query(userInput);
@@ -147,8 +149,8 @@ namespace TestProject1
         [Fact]
         public void MinusTest (){
             IFileReader fileReader = Substitute.For<IFileReader>();
-            fileReader.ReadingFiles("../../../TestDocs/DocsForTest").Returns(ReturningDictionary());
-            IInvertedIndex invertedIndex = new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles("../../../TestDocs/DocsForTest"));
+            fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
+            IInvertedIndex invertedIndex = new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles(Path));
 
             UserInput userInput = new UserInput("-elephant");
             var files = invertedIndex.Query(userInput);
@@ -159,8 +161,8 @@ namespace TestProject1
         [Fact]
         public void EmptyTest (){
             IFileReader fileReader = Substitute.For<IFileReader>();
-            fileReader.ReadingFiles("../../../TestDocs/DocsForTest").Returns(ReturningDictionary());
-            IInvertedIndex invertedIndex = new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles("../../../TestDocs/DocsForTest"));
+            fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
+            IInvertedIndex invertedIndex = new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles(Path));
 
             UserInput userInput = new UserInput(" ");
             var files = invertedIndex.Query(userInput);

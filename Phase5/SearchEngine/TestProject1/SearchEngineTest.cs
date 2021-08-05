@@ -10,10 +10,10 @@ namespace TestProject1
         [Fact]
         public void TestSearchEngine()
         {
-            CustomInput reader = new CustomInput("hello\nthis\nexit");
-            CustomOutput writer = new CustomOutput();
-            IInvertedIndex invertedIndex = GetInvertedIndex();
-            SearchEngine.SearchEngine searchEngine =
+            var reader = new CustomInput("hello\nthis\nexit");
+            var writer = new CustomOutput();
+            var invertedIndex = GetInvertedIndex();
+            var searchEngine =
                 new SearchEngine.SearchEngine(reader, writer, invertedIndex);
             searchEngine.Run();
             const string expectedOutput = "1\n2\nno doc found\n";
@@ -23,10 +23,10 @@ namespace TestProject1
         [Fact]
         public void TestNoDocFound()
         {
-            CustomInput reader = new CustomInput("cat\nnothing\nexit");
-            CustomOutput writer = new CustomOutput();
-            IInvertedIndex invertedIndex = GetInvertedIndex();
-            SearchEngine.SearchEngine searchEngine =
+            var reader = new CustomInput("cat\nnothing\nexit");
+            var writer = new CustomOutput();
+            var invertedIndex = GetInvertedIndex();
+            var searchEngine =
                 new SearchEngine.SearchEngine(reader, writer, invertedIndex);
             searchEngine.Run();
             const string expectedOutput = "no doc found\nno doc found\n";
@@ -36,10 +36,10 @@ namespace TestProject1
         [Fact]
         public void TestJustExit()
         {
-            CustomInput reader = new CustomInput("exit");
-            CustomOutput writer = new CustomOutput();
-            IInvertedIndex invertedIndex = GetInvertedIndex();
-            SearchEngine.SearchEngine searchEngine =
+            var reader = new CustomInput("exit");
+            var writer = new CustomOutput();
+            var invertedIndex = GetInvertedIndex();
+            var searchEngine =
                 new SearchEngine.SearchEngine(reader, writer, invertedIndex);
             searchEngine.Run();
             const string expectedOutput = "";
@@ -48,7 +48,7 @@ namespace TestProject1
 
         private static IInvertedIndex GetInvertedIndex()
         {
-            IInvertedIndex invertedIndex = Substitute.For<IInvertedIndex>();
+            var invertedIndex = Substitute.For<IInvertedIndex>();
             invertedIndex.TokenizeFiles(Arg.Any<Dictionary<string, string>>()).Returns(invertedIndex);
             invertedIndex.Query(Arg.Any<IUserInput>()).Returns(x =>
             {
@@ -65,14 +65,15 @@ namespace TestProject1
         }
     }
 
-    class CustomInput : IInputReader
+    internal class CustomInput : IInputReader
     {
         private readonly string[] _inputs;
-        private int _counter = 0;
+        private int _counter;
 
         public CustomInput(string input)
         {
             _inputs = input.Split('\n');
+            _counter = 0;
         }
 
         public string Read()
@@ -83,7 +84,7 @@ namespace TestProject1
         }
     }
 
-    class CustomOutput : IOutputWriter
+    internal class CustomOutput : IOutputWriter
     {
         public string AllOutput { private set; get; } = "";
 

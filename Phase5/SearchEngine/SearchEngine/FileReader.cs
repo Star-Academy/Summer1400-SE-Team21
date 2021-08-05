@@ -15,7 +15,7 @@ namespace SearchEngine
             return _fileNameToItsStuffs;
         }
 
-        public void ListFilesForFolder(string path)
+        private void ListFilesForFolder(string path)
         {
             try
             {
