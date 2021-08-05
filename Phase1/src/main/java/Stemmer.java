@@ -55,20 +55,6 @@ public class Stemmer {
     }
 
     /**
-     * Add a character to the word being stemmed.  When you are finished
-     * adding characters, you can call stem(void) to stem the word.
-     */
-
-    public void add(char ch) {
-        if (i == b.length) {
-            char[] new_b = new char[i + INC];
-            for (int c = 0; c < i; c++) new_b[c] = b[c];
-            b = new_b;
-        }
-        b[i++] = ch;
-    }
-
-    /**
      * Adds wLen characters to the word being stemmed contained in a portion
      * of a char[] array. This is like repeated calls of add(char ch), but
      * faster.
@@ -92,25 +78,9 @@ public class Stemmer {
         return new String(b, 0, i_end);
     }
 
-    /**
-     * Returns the length of the word resulting from the stemming process.
-     */
-    public int getResultLength() {
-        return i_end;
-    }
-
     /* cons(i) is true <=> b[i] is a consonant. */
 
-    /**
-     * Returns a reference to a character buffer containing the results of
-     * the stemming process.  You also need to consult getResultLength()
-     * to determine the length of the result.
-     */
-    public char[] getResultBuffer() {
-        return b;
-    }
-
-   /* m() measures the number of consonant sequences between 0 and j. if c is
+    /* m() measures the number of consonant sequences between 0 and j. if c is
       a consonant sequence and v a vowel sequence, and <..> indicates arbitrary
       presence,
 
