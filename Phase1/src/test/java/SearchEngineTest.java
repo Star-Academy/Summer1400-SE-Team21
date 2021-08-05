@@ -13,8 +13,8 @@ class SearchEngineTest {
         System.setIn(inputStream);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
-        new SearchEngine("").run();
-        assertEquals("no doc found\nno doc found\n",outputStream.toString().replaceAll("\r",""));
+        new SearchEngine(new ConsoleReader(), new ConsoleWriter()).run();
+        assertEquals("1\nno doc found\n",outputStream.toString().replaceAll("\r",""));
     }
 
 
@@ -26,7 +26,7 @@ class SearchEngineTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        SearchEngine searchEngine = new SearchEngine();
+        SearchEngine searchEngine = new SearchEngine(new ConsoleReader(), new ConsoleWriter());
         searchEngine.run();
         assertEquals("no doc found\nno doc found\n",outputStream.toString().replaceAll("\r",""));
     }

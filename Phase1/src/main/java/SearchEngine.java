@@ -3,6 +3,13 @@ import java.util.TreeSet;
 
 public class SearchEngine {
     private final static String DOC_PATH = "Docs";
+    private Reader reader;
+    private Writer writer;
+
+    public SearchEngine(Reader reader,Writer writer){
+        this.reader = reader;
+        this.writer = writer;
+    }
 
     public void run(){
         FileReader fileReader = new FileReader();
