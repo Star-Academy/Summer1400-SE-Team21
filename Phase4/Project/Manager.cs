@@ -16,7 +16,7 @@ namespace Project
             var topStudents = ranker.GetNTopStudents(TopListSize);
             foreach (var student in topStudents)
             {
-                Console.WriteLine(student.FirstName + " " + student.LastName + " " + student.Average);
+                Console.WriteLine(student);
             }
         }
     }
