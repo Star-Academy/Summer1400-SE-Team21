@@ -35,7 +35,7 @@ namespace TestProject1
         
         
         [Fact]
-        public void QueryTest (){
+        public void QueryTestSimpleTest_ForStableState_CheckingFirstFileForWord (){
             IFileReader fileReader = Substitute.For<IFileReader>();
             fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
             InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles(Path));
@@ -49,7 +49,7 @@ namespace TestProject1
         
         
         [Fact]
-        public void QueryTest2 (){
+        public void QueryTest_ForStableState_CheckingEmptyResult (){
             IFileReader fileReader = Substitute.For<IFileReader>();
             fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
             InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles(Path));
@@ -61,7 +61,7 @@ namespace TestProject1
         
         
         [Fact]
-        public void QueryTest3 (){
+        public void QueryTest_CheckingSipleQuery (){
             IFileReader fileReader = Substitute.For<IFileReader>();
             fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
             InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles(Path));
