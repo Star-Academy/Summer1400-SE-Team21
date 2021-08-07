@@ -61,7 +61,7 @@ namespace TestProject1
         
         
         [Fact]
-        public void QueryTest_CheckingSipleQuery (){
+        public void QueryTest_CheckingSimpleQuery (){
             IFileReader fileReader = Substitute.For<IFileReader>();
             fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
             InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex().TokenizeFiles(fileReader.ReadingFiles(Path));
