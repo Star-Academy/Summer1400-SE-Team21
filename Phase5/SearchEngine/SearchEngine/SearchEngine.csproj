@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+	<PackageId>StarAcademy.Team21.InvertedIndex</PackageId>
+	 <Authors>Ali Nazari,Mohammad Aghaie</Authors>
+	 <Company>Star Academy</Company>
   </PropertyGroup>
 
   <ItemGroup>
