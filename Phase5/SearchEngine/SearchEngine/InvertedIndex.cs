@@ -12,26 +12,6 @@ namespace SearchEngine
         
         public IInvertedIndex TokenizeFiles(Dictionary<string, string> allDocuments)
         {
-            // foreach(KeyValuePair<string, string> entry in allDocuments)
-            // {
-            //     string value = entry.Value;
-            //     SortedSet<string> rawAllWords = Tokenize(value);
-            //     SortedSet<string> allWords = StringUtils.ProcessRawTokens(rawAllWords);
-            //     foreach (var word in allWords)
-            //     {
-            //         if (tokenizedWords.ContainsKey(word))
-            //         {
-            //             tokenizedWords[word].Add(entry.Key);
-            //         }
-            //         else
-            //         {
-            //             SortedSet<string> docks = new SortedSet<string>();
-            //             docks.Add(entry.Key);
-            //             tokenizedWords.Add(word.ToLower(), docks);
-            //         }
-            //     }
-            // }
-            
             allDocuments.ToList().ForEach(pair => StringUtils.ProcessRawTokens(Tokenize(pair.Value)).ToList().ForEach(
                 word =>
                 {
@@ -53,7 +33,7 @@ namespace SearchEngine
             {
                 if (!char.IsLetter(st[i])) continue;
                 StringBuilder token = new StringBuilder();
-                while (i < st.Length && char.IsLetter(st[i]))
+                while (i < st.Length && char.IsLetterOrDigit(st[i]))
                 {
                     token.Append(char.ToLower(st[i]));
                     i++;
@@ -67,23 +47,6 @@ namespace SearchEngine
 
         public SortedSet<string> Query(IUserInput input)
         {
-            // SortedSet<string> result = null;
-            // foreach (var st in input.GetAndInputs())
-            // {
-            //     result = AddWordToResult(st, result);
-            // }
-            // foreach (var st in input.GetOrInputs())
-            // {
-            //     result = AddWordToResult(st, result);
-            // }
-            // foreach (var st in input.GetRemoveInputs())
-            // {
-            //     result = RemoveWordFromResult(st, result);
-            // }
-            //
-            // if (result != null) return result;
-            // else return new SortedSet<string>();
-
             SortedSet<string> result = null;
             input.GetAndInputs().ToList().ForEach(st => result = AndWordWithResult(st, result));
             input.GetOrInputs().ToList().ForEach(st => result = AddWordToResult(st, result));
@@ -125,10 +88,6 @@ namespace SearchEngine
         private SortedSet<string> CloneSortedSet(SortedSet<string> toClone)
         {
             SortedSet<string> cloneable = new SortedSet<string>();
-            // foreach (var st in toClone)
-            // {
-            //     clonable.Add(st);
-            // }
             toClone.ToList().ForEach(st => cloneable.Add(st));
             return cloneable;
         }

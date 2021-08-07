@@ -11,69 +11,7 @@ namespace TestProject1
     {
         private const string Path = "../../../TestDocs/DocsForTest";
 
-        [Fact]
-        public void TestSimpleInvertedIndex()
-        {
-            InvertedIndex invertedIndex = new InvertedIndex();
-            invertedIndex.TokenizeFiles(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
-            var queryResult = invertedIndex.Query(new UserInput("Cause +People -pretty"));
-            var expected = new SortedSet<string>() {"59631.txt", "59635.txt", "59639.txt", "59648.txt"};
-            Assert.Equal(expected, queryResult);
-        }
         
-        
-        [Fact]
-        public void TestJustAndQuery()
-        {
-            InvertedIndex invertedIndex = new InvertedIndex();
-            invertedIndex.TokenizeFiles(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
-            var result = invertedIndex.Query(new UserInput("Cause People pretty"));
-            Assert.True(!result.Any());
-        }
-        
-        
-        [Fact]
-        public void TestJustOrQuery()
-        {
-            InvertedIndex invertedIndex = new InvertedIndex();
-            invertedIndex.TokenizeFiles(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
-            var queryResult = invertedIndex.Query(new UserInput("+Cause +People +pretty"));
-            var expected = new SortedSet<string>() 
-                {"59631.txt", "59632.txt", "59633.txt", "59635.txt", "59637.txt", "59639.txt", "59648.txt"};
-            Assert.Equal(expected,queryResult);
-        }
-        
-        
-        [Fact]
-        public void TestJustRemoveQuery()
-        {
-            InvertedIndex invertedIndex = new InvertedIndex();
-            invertedIndex.TokenizeFiles(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
-            var result = invertedIndex.Query(new UserInput("-Cause -People -pretty"));
-            Assert.True(!result.Any());
-        }
-        
-        
-        [Fact]
-        public void TestEmptyQuery()
-        {
-            InvertedIndex invertedIndex = new InvertedIndex();
-            invertedIndex.TokenizeFiles(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
-            var result = invertedIndex.Query(new UserInput(""));
-            Assert.True(!result.Any());
-        }
-        
-        
-        [Fact]
-        public void TestLongQuery()
-        {
-            InvertedIndex invertedIndex = new InvertedIndex();
-            invertedIndex.TokenizeFiles(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
-            var result = invertedIndex.Query(new UserInput("thisWordIsTooLongAndThereShouldBeNoMatchDocInOurDatabase"));
-            Assert.True(!result.Any());
-        }
-
-
         private Dictionary<string, string> ReturningDictionary()
         {
             var toReturn = new Dictionary<string, string>
@@ -167,6 +105,68 @@ namespace TestProject1
             UserInput userInput = new UserInput(" ");
             var files = invertedIndex.Query(userInput);
             Assert.True(!files.Any());
+        }
+        
+        [Fact]
+        public void TestSimpleInvertedIndex()
+        {
+            InvertedIndex invertedIndex = new InvertedIndex();
+            invertedIndex.TokenizeFiles(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
+            var queryResult = invertedIndex.Query(new UserInput("Cause +People -pretty"));
+            var expected = new SortedSet<string>() {"59631.txt", "59635.txt", "59639.txt", "59648.txt"};
+            Assert.Equal(expected, queryResult);
+        }
+        
+        
+        [Fact]
+        public void TestJustAndQuery()
+        {
+            InvertedIndex invertedIndex = new InvertedIndex();
+            invertedIndex.TokenizeFiles(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
+            var result = invertedIndex.Query(new UserInput("Cause People pretty"));
+            Assert.True(!result.Any());
+        }
+        
+        
+        [Fact]
+        public void TestJustOrQuery()
+        {
+            InvertedIndex invertedIndex = new InvertedIndex();
+            invertedIndex.TokenizeFiles(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
+            var queryResult = invertedIndex.Query(new UserInput("+Cause +People +pretty"));
+            var expected = new SortedSet<string>() 
+                {"59631.txt", "59632.txt", "59633.txt", "59635.txt", "59637.txt", "59639.txt", "59648.txt"};
+            Assert.Equal(expected,queryResult);
+        }
+        
+        
+        [Fact]
+        public void TestJustRemoveQuery()
+        {
+            InvertedIndex invertedIndex = new InvertedIndex();
+            invertedIndex.TokenizeFiles(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
+            var result = invertedIndex.Query(new UserInput("-Cause -People -pretty"));
+            Assert.True(!result.Any());
+        }
+        
+        
+        [Fact]
+        public void TestEmptyQuery()
+        {
+            InvertedIndex invertedIndex = new InvertedIndex();
+            invertedIndex.TokenizeFiles(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
+            var result = invertedIndex.Query(new UserInput(""));
+            Assert.True(!result.Any());
+        }
+        
+        
+        [Fact]
+        public void TestLongQuery()
+        {
+            InvertedIndex invertedIndex = new InvertedIndex();
+            invertedIndex.TokenizeFiles(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
+            var result = invertedIndex.Query(new UserInput("thisWordIsTooLongAndThereShouldBeNoMatchDocInOurDatabase"));
+            Assert.True(!result.Any());
         }
     }
 }
