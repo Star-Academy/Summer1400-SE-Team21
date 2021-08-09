@@ -22,13 +22,20 @@ namespace SearchEngine
             {
                 string input = _reader.Read();
                 if (IsFinished(input))
+                {
                     break;
+                }
                 UserInput userInput = new UserInput(input);
                 SortedSet<string> containingDocs = _invertedIndex.Query(userInput);
-                if (containingDocs.Count==0)
+                if (containingDocs.Count == 0)
+                {
                     _writer.Write("no doc found");
+                }
+
                 foreach (var docName in containingDocs)
+                {
                     _writer.Write(docName);
+                }
             }
         }
 

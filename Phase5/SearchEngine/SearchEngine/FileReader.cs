@@ -39,7 +39,7 @@ namespace SearchEngine
             }
             catch (Exception e)
             {
-                Console.WriteLine("Path is not valid");
+                Console.WriteLine(e.Message);
             }
         }
         
