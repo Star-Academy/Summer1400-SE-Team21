@@ -8,20 +8,25 @@ namespace SearchEngine
     public class InvertedIndex : IInvertedIndex
     {
         public Dictionary<string, SortedSet<string>> TokenizedWords { get; } = new();
-        
-        
+
+
         public IInvertedIndex TokenizeFiles(Dictionary<string, string> allDocuments)
         {
-            allDocuments.ToList().ForEach(pair => StringUtils.ProcessRawTokens(Tokenize(pair.Value)).ToList().ForEach(
-                word =>
+            allDocuments.ToList().ForEach(pair =>
+            {
+                foreach (var word in StringUtils.ProcessRawTokens(Tokenize(pair.Value)).ToList())
                 {
-                    if (TokenizedWords.ContainsKey(word)) TokenizedWords[word].Add(pair.Key);
+                    if (TokenizedWords.ContainsKey(word))
+                    {
+                        TokenizedWords[word].Add(pair.Key);
+                    }
                     else
                     {
                         SortedSet<string> docks = new SortedSet<string> { pair.Key };
                         TokenizedWords.Add(word.ToLower(), docks);
                     }
-                }));
+                }
+            });
 
             return this;
         }
@@ -29,7 +34,7 @@ namespace SearchEngine
         private static SortedSet<string> Tokenize(string st)
         {
             SortedSet<string> tokens = new SortedSet<string>();
-            for (int i = 0; i<st.Length; ++i)
+            for (int i = 0; i < st.Length; ++i)
             {
                 if (!char.IsLetter(st[i])) continue;
                 StringBuilder token = new StringBuilder();
