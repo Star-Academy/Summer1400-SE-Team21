@@ -16,15 +16,7 @@ namespace SearchEngine
         {
             
         }
-
-        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        // {
-        //     var builder = new DbContextOptionsBuilder<InvertedIndexContext>();
-        //     builder.UseInMemoryDatabase("InvertedIndex");
-        //     var connectionString = ConfigurationManager.AppSettings.Get("ConnectionString");
-        //     if (connectionString != null) optionsBuilder.UseSqlServer(connectionString);
-        //     else optionsBuilder.UseInMemoryDatabase("InvertedIndex");
-        // }
+        
         public List<string> Get(string key)
         {
             var word = Words.Where(w => w.String == key).Include(w => w.Documents).FirstOrDefault();
