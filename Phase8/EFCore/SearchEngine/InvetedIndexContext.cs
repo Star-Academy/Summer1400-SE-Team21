@@ -54,14 +54,14 @@ namespace SearchEngine
             word.Documents.Add(document);
         }
 
-        public void Delete()
+        public bool Delete()
         {
-            Database.EnsureDeleted();
+            return Database.EnsureDeleted();
         }
 
-        public void Create()
+        public bool Create()
         {
-            Database.EnsureCreated();
+            return Database.EnsureCreated();
         }
 
         public void Save()

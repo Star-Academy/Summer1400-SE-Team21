@@ -6,8 +6,8 @@ namespace SearchEngine.Interfaces
     {
         List<V> Get(K key);
         void Add(K key, V value);
-        void Delete();
-        void Create();
+        bool Delete();
+        bool Create();
         void Save();
     }
 }
