@@ -10,8 +10,9 @@ namespace TestProject1
         private InvertedIndexContext GetContext()
         {
             var builder = new DbContextOptionsBuilder<InvertedIndexContext>();
-            builder.UseInMemoryDatabase("InvertedIndex");
+            builder.UseInMemoryDatabase("InvertedIndexContext");
             var context = new InvertedIndexContext(builder.Options);
+            context.Database.EnsureDeleted();
             return context;
         }
 
