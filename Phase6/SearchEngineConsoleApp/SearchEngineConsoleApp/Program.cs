@@ -1,4 +1,6 @@
 ﻿using System;
+using SearchEngine;
+using SearchEngine = SearchEngine.SearchEngine;
 
 namespace SearchEngineConsoleApp
 {
@@ -6,7 +8,11 @@ namespace SearchEngineConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            InvertedIndex index = new InvertedIndex();
+            index.TokenizeFiles(new FileReader().ReadingFiles("../../../TestDocs"));
+            global::SearchEngine.SearchEngine myEngine =
+                new global::SearchEngine.SearchEngine(new ConsoleReader(), new ConsoleWriter(), index);
+            myEngine.Run();
         }
     }
 }
