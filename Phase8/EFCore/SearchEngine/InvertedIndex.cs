@@ -37,7 +37,10 @@ namespace SearchEngine
             SortedSet<string> tokens = new SortedSet<string>();
             for (int i = 0; i < st.Length; ++i)
             {
-                if (!char.IsLetter(st[i])) continue;
+                if (!char.IsLetter(st[i]))
+                {
+                    continue;
+                }
                 StringBuilder token = new StringBuilder();
                 while (i < st.Length && char.IsLetterOrDigit(st[i]))
                 {

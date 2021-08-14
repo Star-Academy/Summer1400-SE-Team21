@@ -21,7 +21,9 @@ namespace SearchEngine
         {
             var word = Words.Where(w => w.String == key).Include(w => w.Documents).FirstOrDefault();
             if (word == null)
+            {
                 return new List<string>();
+            }
             return word.Documents.Select(document => document.Name).ToList();
         }
 
@@ -40,9 +42,11 @@ namespace SearchEngine
                 document = new Document() { Name = value };
                 Documents.Add(document);
             }
-            
-            if(word.Documents.Contains(document))
+
+            if (word.Documents.Contains(document))
+            {
                 return;
+            }
             word.Documents.Add(document);
         }
 
