@@ -19,7 +19,6 @@ namespace SearchEngine
         {
             _context.Delete();
             _context.Create();
-            var wordObjects = new Dictionary<string, Word>();
             allDocuments.ToList().ForEach(pair =>
             {
                 Console.WriteLine($"adding {pair.Key}");
