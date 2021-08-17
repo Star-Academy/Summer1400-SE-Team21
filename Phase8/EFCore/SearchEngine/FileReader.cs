@@ -27,22 +27,25 @@ namespace SearchEngine
                         ListFilesForFolder(file);
                     else
                     {
-                        string fileName = Path.GetFileName(file);
-                        string[] lines = File.ReadAllLines(file);
-                        string stuffs = "";
-                        foreach (string line in lines)
-                            stuffs += line + " ";
-                        stuffs = stuffs.Trim();
-                        _fileNameToItsStuffs.Add(fileName, stuffs);
+                        AddFileContent(file);
                     }
                 }
             }
-            catch (Exception e)
+            catch (IOException e)
             {
                 Console.WriteLine(e.Message);
             }
         }
-        
-        
+
+        private void AddFileContent(string filePath)
+        {
+            string fileName = Path.GetFileName(filePath);
+            string[] lines = File.ReadAllLines(filePath);
+            string stuffs = "";
+            foreach (string line in lines)
+                stuffs += line + " ";
+            stuffs = stuffs.Trim();
+            _fileNameToItsStuffs.Add(fileName, stuffs);
+        }
     }
 }
