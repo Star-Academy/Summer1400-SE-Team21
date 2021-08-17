@@ -13,14 +13,12 @@ namespace TestProject1
     public class InvertedIndexTest
     {
         private const string Path = "../../../TestDocs/DocsForTest";
-        private InvertedIndexContext _context;
+        private IDatabaseMap<string,string> _context;
         private ITokenizer _tokenizer;
 
         public InvertedIndexTest()
         {
-            DbContextOptionsBuilder<InvertedIndexContext> builder = new();
-            builder.UseInMemoryDatabase("InvertedIndex");
-            _context = new InvertedIndexContext(builder.Options);
+            _context = new SimpleDatabase();
             _tokenizer = GetTokenizer();
         }
 
@@ -201,6 +199,52 @@ namespace TestProject1
             invertedIndex.AddDocuments(new FileReader().ReadingFiles("../../../TestDocs/testDocs"),_tokenizer);
             var result = invertedIndex.Query(new UserInput("thisWordIsTooLongAndThereShouldBeNoMatchDocInOurDatabase"));
             Assert.True(!result.Any());
+        }
+    }
+
+    class SimpleDatabase : IDatabaseMap<string,string>
+    {
+        private Dictionary<string, SortedSet<string>> _dictionary;
+        public List<string> Get(string key)
+        {
+            if (_dictionary.ContainsKey(key))
+                return _dictionary[key].ToList();
+            else
+                return new List<string>();
+        }
+
+        public void Add(string key, string value)
+        {
+            if (_dictionary.ContainsKey(key))
+                _dictionary[key].Add(value);
+            else
+                _dictionary.Add(key,new SortedSet<string>{value});
+        }
+
+        public bool Delete()
+        {
+            if (_dictionary != null)
+            {
+                _dictionary = null;
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool Create()
+        {
+            if (_dictionary == null)
+            {
+                _dictionary = new Dictionary<string, SortedSet<string>>();
+                return true;
+            }
+
+            return false;
+        }
+
+        public void Save()
+        {
         }
     }
 }
