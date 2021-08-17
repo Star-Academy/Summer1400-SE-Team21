@@ -19,7 +19,7 @@ namespace TestProject1
             string[] args = new string[0];
             new Manager().Run(args);
             
-            Assert.Equal(writer.ToString(), "using In Memory\r\nstart engine\r\nno doc found\r\nend engine\r\n");
+            Assert.Equal("using In Memory\nstart engine\nno doc found\nend engine\n", writer.ToString().Replace("\r",""));
         }
         
         
@@ -36,7 +36,7 @@ namespace TestProject1
             args[0] = "../../../../TestProject1/TestDocs/Doc";
             Program.Main(args);
 
-            Assert.Equal(writer.ToString().Substring(0, 5), "using");
+            Assert.Equal("using", writer.ToString().Substring(0, 5));
         }
         
     }

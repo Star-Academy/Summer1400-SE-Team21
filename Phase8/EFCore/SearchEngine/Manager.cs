@@ -42,7 +42,7 @@ namespace SearchEngine
         {
             var invertedIndex = new InvertedIndex(database);
             Console.WriteLine("add files");
-            invertedIndex.TokenizeFiles(new FileReader().ReadingFiles(filePath));
+            invertedIndex.AddDocuments(new FileReader().ReadingFiles(filePath),new Tokenizer());
             Console.WriteLine("finish adding file");
         }
     }

@@ -15,14 +15,14 @@ namespace SearchEngine
             _context = context;
         }
 
-        public IInvertedIndex TokenizeFiles(Dictionary<string, string> allDocuments)
+        public IInvertedIndex AddDocuments(Dictionary<string, string> allDocuments,ITokenizer tokenizer)
         {
             _context.Delete();
             _context.Create();
             allDocuments.ToList().ForEach(pair =>
             {
                 Console.WriteLine($"adding {pair.Key}");
-                foreach (var word in StringUtils.ProcessRawTokens(Tokenize(pair.Value)).ToList())
+                foreach (var word in StringUtils.ProcessRawTokens(tokenizer.Tokenize(pair.Value)).ToList())
                 {
                     _context.Add(word,pair.Key);
                 }
@@ -30,28 +30,6 @@ namespace SearchEngine
             
             _context.Save();
             return this;
-        }
-
-        private static SortedSet<string> Tokenize(string st)
-        {
-            SortedSet<string> tokens = new SortedSet<string>();
-            for (int i = 0; i < st.Length; ++i)
-            {
-                if (!char.IsLetter(st[i]))
-                {
-                    continue;
-                }
-                StringBuilder token = new StringBuilder();
-                while (i < st.Length && char.IsLetterOrDigit(st[i]))
-                {
-                    token.Append(char.ToLower(st[i]));
-                    i++;
-                }
-
-                tokens.Add(token.ToString());
-            }
-
-            return tokens;
         }
 
         public SortedSet<string> Query(IUserInput input)
