@@ -37,8 +37,15 @@ namespace TestProject1
         {
             var context = GetContext();
             context.Create();
-            var word = "word";
-            var document = "document";
+            Word myWord = new Word() {String = "word"};
+            var word = myWord.String;
+            Document myDocument = new Document() {Name = "document"};
+            var document = myDocument.Name;
+            //
+            myDocument.Words = new List<Word>();
+            var words = myDocument.Words;
+            words.Add(myWord);
+            //
             Assert.Empty(context.Get(word));
             context.Add(word, document);
             context.Save();
