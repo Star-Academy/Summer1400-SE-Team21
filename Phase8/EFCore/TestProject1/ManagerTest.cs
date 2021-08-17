@@ -8,7 +8,7 @@ namespace TestProject1
     public class ManagerTest
     {
         [Fact]
-        public void JustTest()
+        public void TestRunManager()
         {
             StringWriter writer = new StringWriter();
             Console.SetOut(writer);
@@ -24,7 +24,7 @@ namespace TestProject1
         
         
         [Fact]
-        public void JustTest2()
+        public void TestProgram()
         {
             StringWriter writer = new StringWriter();
             Console.SetOut(writer);
