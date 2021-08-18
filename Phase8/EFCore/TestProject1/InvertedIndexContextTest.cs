@@ -27,9 +27,15 @@ namespace TestProject1
         public void TestDeleteDatabase()
         {
             var context = GetContext();
-            Assert.False(context.Delete());
             context.Create();
             Assert.True(context.Delete());
+        }
+        
+        [Fact]
+        public void TestDatabaseNotExist()
+        {
+            var context = GetContext();
+            Assert.False(context.Delete());
         }
 
         [Fact]
