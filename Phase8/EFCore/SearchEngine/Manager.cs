@@ -31,7 +31,7 @@ namespace SearchEngine
 
         private void Search(IDatabaseMap<string,string> database)
         {
-            var invertedIndex = new InvertedIndex(database);
+            var invertedIndex = new InvertedIndex(database,new Tokenizer());
             var searchEngine = new SearchEngine(new ConsoleReader(), new ConsoleWriter(), invertedIndex);
             Console.WriteLine("start engine");
             searchEngine.Run();
@@ -40,9 +40,9 @@ namespace SearchEngine
 
         private void Index(string filePath,IDatabaseMap<string,string> database)
         {
-            var invertedIndex = new InvertedIndex(database);
+            var invertedIndex = new InvertedIndex(database,new Tokenizer());
             Console.WriteLine("add files");
-            invertedIndex.AddDocuments(new FileReader().ReadingFiles(filePath),new Tokenizer());
+            invertedIndex.AddDocuments(new FileReader().ReadingFiles(filePath));
             Console.WriteLine("finish adding file");
         }
     }

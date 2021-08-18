@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using WebApi.Services;
 
 namespace WebApi
 {
@@ -28,6 +29,7 @@ namespace WebApi
         {
 
             services.AddControllers();
+            services.AddSingleton(typeof(IInvertedIndexService), new InvertedIndexService());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1" });

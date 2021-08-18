@@ -4,6 +4,7 @@ namespace WebApi.Services
 {
     public interface IInvertedIndexService
     {
-        List<string> Search(string word);
+        List<string> Query(string query);
+        void AddDocument(string name, string content);
     }
 }

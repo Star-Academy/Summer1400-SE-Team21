@@ -9,27 +9,34 @@ namespace SearchEngine
     public class InvertedIndex : IInvertedIndex
     {
         private readonly IDatabaseMap<string,string> _context;
+        private ITokenizer _tokenizer;
         
-        public InvertedIndex(IDatabaseMap<string,string> context)
+        public InvertedIndex(IDatabaseMap<string,string> context,ITokenizer tokenizer)
         {
             _context = context;
+            _tokenizer = tokenizer;
         }
 
-        public IInvertedIndex AddDocuments(Dictionary<string, string> allDocuments,ITokenizer tokenizer)
+        public IInvertedIndex AddDocuments(Dictionary<string, string> allDocuments)
         {
             _context.Delete();
             _context.Create();
             allDocuments.ToList().ForEach(pair =>
             {
                 Console.WriteLine($"adding {pair.Key}");
-                foreach (var word in StringUtils.ProcessRawTokens(tokenizer.Tokenize(pair.Value)).ToList())
-                {
-                    _context.Add(word,pair.Key);
-                }
+                AddDocument(pair.Key,pair.Value);
             });
             
             _context.Save();
             return this;
+        }
+
+        public void AddDocument(string name, string content)
+        {
+            foreach (var word in StringUtils.ProcessRawTokens(_tokenizer.Tokenize(content)).ToList())
+            {
+                _context.Add(word,name);
+            }
         }
 
         public SortedSet<string> Query(IUserInput input)

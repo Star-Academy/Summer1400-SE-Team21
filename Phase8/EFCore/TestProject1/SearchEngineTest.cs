@@ -63,7 +63,7 @@ namespace TestProject1
         private static IInvertedIndex GetInvertedIndex()
         {
             var invertedIndex = Substitute.For<IInvertedIndex>();
-            invertedIndex.AddDocuments(Arg.Any<Dictionary<string, string>>(), Arg.Any<ITokenizer>()).Returns(invertedIndex);
+            invertedIndex.AddDocuments(Arg.Any<Dictionary<string, string>>()).Returns(invertedIndex);
             invertedIndex.Query(Arg.Any<IUserInput>()).Returns(x =>
             {
                 var list = new SortedSet<string>();
