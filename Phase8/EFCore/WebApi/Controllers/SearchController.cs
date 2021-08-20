@@ -21,7 +21,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostDocument([FromBody] Dictionary<string, string> fileContents)
+        public IActionResult PostDocuments([FromBody] Dictionary<string, string> fileContents)
         {
             _invertedIndex.AddDocument(fileContents);
             return Ok(new
