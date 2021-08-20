@@ -67,10 +67,15 @@ namespace TestProject1
         
         
         [Fact]
-        public void QueryTestSimpleTest_ForStableState_CheckingFirstFileForWord (){
+        public void QueryTestSimpleTest_ForStableState_CheckingFirstFileForWord ()
+        {
+            _context.Create();
+            _context.Delete();
             IFileReader fileReader = Substitute.For<IFileReader>();
             fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
             InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex(_context,_tokenizer).AddDocuments(fileReader.ReadingFiles(Path));
+            invertedIndex.AddDocument(null, "and an empty doc");
+            invertedIndex.AddDocument("notImportant", "nope");
 
             UserInput userInput = new UserInput("everyone");
             SortedSet<string> files = invertedIndex.Query(userInput);

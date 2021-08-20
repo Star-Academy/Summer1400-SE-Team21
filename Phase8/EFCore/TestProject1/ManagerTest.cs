@@ -29,7 +29,7 @@ namespace TestProject1
             StringWriter writer = new StringWriter();
             Console.SetOut(writer);
 
-            StringReader reader = new StringReader("hahaha\nexit");
+            StringReader reader = new StringReader("hahaha12\nexit");
             Console.SetIn(reader);
 
             string[] args = new string[1];
