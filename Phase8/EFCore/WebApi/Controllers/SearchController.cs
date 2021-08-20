@@ -23,11 +23,18 @@ namespace WebApi.Controllers
         [HttpPost]
         public IActionResult PostDocuments([FromBody] Dictionary<string, string> fileContents)
         {
-            _invertedIndex.AddDocument(fileContents);
+            _invertedIndex.AddDocuments(fileContents);
             return Ok(new
             {
                 fileContents
             });
+        }
+
+        [HttpDelete]
+        public IActionResult ClearIndex()
+        {
+            _invertedIndex.ClearIndex();
+            return Ok();
         }
     }
 }

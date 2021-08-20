@@ -7,5 +7,6 @@ namespace SearchEngine.Interfaces
         IInvertedIndex AddDocuments(Dictionary<string, string> allDocuments);
         void AddDocument(string word, string content);
         SortedSet<string> Query(IUserInput input);
+        void ClearIndex();
     }
 }

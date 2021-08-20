@@ -18,7 +18,6 @@ namespace SearchEngine
 
         public IInvertedIndex AddDocuments(Dictionary<string, string> allDocuments)
         {
-            _context.Delete();
             _context.Create();
             allDocuments.ToList().ForEach(pair =>
             {
@@ -59,6 +58,12 @@ namespace SearchEngine
             input.GetRemoveInputs().ToList().ForEach(st => result = RemoveWordFromResult(st, result));
             if (result != null) return result;
             else return new SortedSet<string>();
+        }
+
+        public void ClearIndex()
+        {
+            _context.Delete();
+            _context.Create();
         }
 
         private SortedSet<string> RemoveWordFromResult(string word, SortedSet<string> result)

@@ -6,6 +6,7 @@ namespace WebApi.Services
     {
         List<string> Query(string query);
         void AddDocument(string name, string content);
-        void AddDocument(Dictionary<string, string> fileContents);
+        void AddDocuments(Dictionary<string, string> fileContents);
+        void ClearIndex();
     }
 }

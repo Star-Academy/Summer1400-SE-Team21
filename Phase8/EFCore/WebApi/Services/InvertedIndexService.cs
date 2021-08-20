@@ -32,9 +32,14 @@ namespace WebApi.Services
             _invertedIndex.AddDocument(name,content);
         }
 
-        public void AddDocument(Dictionary<string, string> fileContents)
+        public void AddDocuments(Dictionary<string, string> fileContents)
         {
             _invertedIndex.AddDocuments(fileContents);
+        }
+
+        public void ClearIndex()
+        {
+            _invertedIndex.ClearIndex();
         }
     }
 }
