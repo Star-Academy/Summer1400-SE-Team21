@@ -31,5 +31,10 @@ namespace WebApi.Services
         {
             _invertedIndex.AddDocument(name,content);
         }
+
+        public void AddDocument(Dictionary<string, string> fileContents)
+        {
+            _invertedIndex.AddDocuments(fileContents);
+        }
     }
 }
