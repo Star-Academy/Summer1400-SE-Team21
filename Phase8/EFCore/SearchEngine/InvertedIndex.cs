@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using SearchEngine.Interfaces;
 
 namespace SearchEngine
@@ -9,7 +8,7 @@ namespace SearchEngine
     public class InvertedIndex : IInvertedIndex
     {
         private readonly IDatabaseMap<string,string> _context;
-        private ITokenizer _tokenizer;
+        private readonly ITokenizer _tokenizer;
         
         public InvertedIndex(IDatabaseMap<string,string> context,ITokenizer tokenizer)
         {
@@ -24,7 +23,7 @@ namespace SearchEngine
             allDocuments.ToList().ForEach(pair =>
             {
                 Console.WriteLine($"adding {pair.Key}");
-                AddDocument(pair.Key,pair.Value);
+                BuiltinAddDocument(pair.Key, pair.Value, false);
             });
             
             _context.Save();
@@ -33,10 +32,22 @@ namespace SearchEngine
 
         public void AddDocument(string name, string content)
         {
+            BuiltinAddDocument(name, content, true);
+        }
+
+        private void BuiltinAddDocument(string name, string content, bool saveContext)
+        {
+            if(name==null || content==null)
+                return;
+            if (saveContext)
+                _context.Create();
             foreach (var word in StringUtils.ProcessRawTokens(_tokenizer.Tokenize(content)).ToList())
             {
-                _context.Add(word,name);
+                _context.Add(word, name);
             }
+
+            if (saveContext)
+                _context.Save();
         }
 
         public SortedSet<string> Query(IUserInput input)
