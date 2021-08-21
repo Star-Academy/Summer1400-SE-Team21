@@ -21,7 +21,7 @@ namespace SearchEngine
                 builder.UseInMemoryDatabase("InvertedIndex");
             }
 
-            var database = new InvertedIndexContext(builder.Options);
+            var database = new InvertedIndexMap(new InvertedIndexContext(builder.Options));
             if(args.Length > 0)
             {
                 Index(args[0], database);

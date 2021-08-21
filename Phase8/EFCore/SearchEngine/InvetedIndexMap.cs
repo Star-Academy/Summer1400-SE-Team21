@@ -5,21 +5,20 @@ using SearchEngine.Interfaces;
 
 namespace SearchEngine
 {
-    public class InvertedIndexContext : DbContext,IDatabaseMap<string,string>
+    public class InvertedIndexMap : IDatabaseMap<string,string>
 
     {
-        public DbSet<Word> Words { get; set; }
-        public DbSet<Document> Documents { get; set; }
+        public readonly InvertedIndexContext Context;
 
-        public InvertedIndexContext(DbContextOptions<InvertedIndexContext> options) :
-            base(options)
+        public InvertedIndexMap(InvertedIndexContext context)
         {
-            
+            Context = context;
         }
-        
+
+
         public List<string> Get(string key)
         {
-            var word = Words.Where(w => w.String == key).Include(w => w.Documents).FirstOrDefault();
+            var word = Context.Words.Where(w => w.String == key).Include(w => w.Documents).FirstOrDefault();
             if (word == null)
             {
                 return new List<string>();
@@ -29,18 +28,18 @@ namespace SearchEngine
 
         public void Add(string key, string value)
         {
-            var word = Words.Find(key);
+            var word = Context.Words.Find(key);
             if (word == null)
             {
                 word = new Word() { String = key };
-                Words.Add(word);
+                Context.Words.Add(word);
             }
 
-            var document = Documents.Find(value);
+            var document = Context.Documents.Find(value);
             if (document == null)
             {
                 document = new Document() { Name = value };
-                Documents.Add(document);
+                Context.Documents.Add(document);
             }
 
             if (word.Documents.Contains(document))
@@ -52,17 +51,17 @@ namespace SearchEngine
 
         public bool Delete()
         {
-            return Database.EnsureDeleted();
+            return Context.Database.EnsureDeleted();
         }
 
         public bool Create()
         {
-            return Database.EnsureCreated();
+            return Context.Database.EnsureCreated();
         }
 
         public void Save()
         {
-            SaveChanges();
+            Context.SaveChanges();
         }
     }
 }
