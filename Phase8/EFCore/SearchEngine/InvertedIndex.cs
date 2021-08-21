@@ -53,7 +53,7 @@ namespace SearchEngine
         private SortedSet<string> AddWordToResult(string word, SortedSet<string> result)
         {
             List<string> wordList = GetDocsContainWord(word);
-            if (result == null) return CloneSortedSet(wordList);
+            if (result == null) return new SortedSet<string>(wordList);
             result.UnionWith(wordList);
             return result;
         }
@@ -61,7 +61,7 @@ namespace SearchEngine
         private SortedSet<string> AndWordWithResult(string word, SortedSet<string> result)
         {
             List<string> wordList = GetDocsContainWord(word);
-            if (result == null) return CloneSortedSet(wordList);
+            if (result == null) return new SortedSet<string>(wordList);
             result.IntersectWith(wordList);
             return result;
         }
@@ -69,13 +69,6 @@ namespace SearchEngine
         public List<string> GetDocsContainWord(string word)
         {
             return _context.Get(word);
-        }
-
-        private SortedSet<string> CloneSortedSet(List<string> toClone)
-        {
-            SortedSet<string> cloneable = new SortedSet<string>();
-            toClone.ToList().ForEach(st => cloneable.Add(st));
-            return cloneable;
         }
     }
 }
