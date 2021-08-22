@@ -72,10 +72,10 @@ namespace TestProject1
                     list.Add("1");
                     list.Add("2");
                 }
+
                 return list;
             });
             return invertedIndex;
-            
         }
     }
 

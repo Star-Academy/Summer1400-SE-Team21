@@ -30,7 +30,7 @@ namespace TestProject1
             context.Create();
             Assert.True(context.Delete());
         }
-        
+
         [Fact]
         public void TestDatabaseNotExist()
         {
@@ -43,9 +43,9 @@ namespace TestProject1
         {
             var context = GetContext();
             context.Create();
-            Word myWord = new Word() {String = "word"};
+            Word myWord = new Word() { String = "word" };
             var word = myWord.String;
-            Document myDocument = new Document() {Name = "document"};
+            Document myDocument = new Document() { Name = "document" };
             var document = myDocument.Name;
             //
             myDocument.Words = new List<Word>();
@@ -55,11 +55,11 @@ namespace TestProject1
             Assert.Empty(context.Get(word));
             context.Add(word, document);
             context.Save();
-            var expected = new List<string> {document };
-            Assert.Equal(expected,context.Get(word));
+            var expected = new List<string> { document };
+            Assert.Equal(expected, context.Get(word));
         }
 
-        [Fact] 
+        [Fact]
         public void TestDuplicateAdd()
         {
             var context = GetContext();
@@ -70,8 +70,8 @@ namespace TestProject1
             context.Add(word, document);
             context.Add(word, document);
             context.Save();
-            var expected = new List<string> {document };
-            Assert.Equal(expected,context.Get(word));
+            var expected = new List<string> { document };
+            Assert.Equal(expected, context.Get(word));
         }
 
         [Fact]
@@ -86,8 +86,8 @@ namespace TestProject1
             context.Add(word, document1);
             context.Add(word, document2);
             context.Save();
-            var expected = new List<string> {document1,document2 };
-            Assert.Equal(expected,context.Get(word));
+            var expected = new List<string> { document1, document2 };
+            Assert.Equal(expected, context.Get(word));
         }
     }
 }

@@ -23,31 +23,32 @@ namespace ConsoleApp
             }
 
             var database = new InvertedIndexMap(new InvertedIndexContext(builder.Options));
-            if(args.Length > 0)
+            if (args.Length > 0)
             {
                 Index(args[0], database);
             }
+
             Search(database);
         }
 
-        private void Search(IDatabaseMap<string,string> database)
+        private void Search(IDatabaseMap<string, string> database)
         {
-            var invertedIndex = new InvertedIndex(database,new Tokenizer());
+            var invertedIndex = new InvertedIndex(database, new Tokenizer());
             var searchEngine = new SearchEngine.SearchEngine(new ConsoleReader(), new ConsoleWriter(), invertedIndex);
             Console.WriteLine("start engine");
             searchEngine.Run();
             Console.WriteLine("end engine");
         }
 
-        private void Index(string filePath,IDatabaseMap<string,string> database)
+        private void Index(string filePath, IDatabaseMap<string, string> database)
         {
-            var invertedIndex = new InvertedIndex(database,new Tokenizer());
+            var invertedIndex = new InvertedIndex(database, new Tokenizer());
             Console.WriteLine("add files");
             invertedIndex.AddDocuments(new FileReader().ReadingFiles(filePath));
             Console.WriteLine("finish adding file");
         }
     }
-    
+
     class ConsoleReader : IInputReader
     {
         public string Read()

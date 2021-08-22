@@ -15,6 +15,7 @@ namespace SearchEngine
                 {
                     continue;
                 }
+
                 StringBuilder token = new StringBuilder();
                 while (i < wholeText.Length && char.IsLetterOrDigit(wholeText[i]))
                 {

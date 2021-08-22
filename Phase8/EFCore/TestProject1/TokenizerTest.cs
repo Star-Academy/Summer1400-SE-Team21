@@ -18,8 +18,8 @@ namespace TestProject1
         {
             Tokenizer tokenizer = new Tokenizer();
             string wholeText = "test this text";
-            var expected = new SortedSet<string> { "test","this","text"};
-            Assert.Equal(expected,tokenizer.Tokenize(wholeText));
+            var expected = new SortedSet<string> { "test", "this", "text" };
+            Assert.Equal(expected, tokenizer.Tokenize(wholeText));
         }
     }
 }

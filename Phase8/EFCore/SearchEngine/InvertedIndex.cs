@@ -7,10 +7,10 @@ namespace SearchEngine
 {
     public class InvertedIndex : IInvertedIndex
     {
-        private readonly IDatabaseMap<string,string> _context;
+        private readonly IDatabaseMap<string, string> _context;
         private readonly ITokenizer _tokenizer;
-        
-        public InvertedIndex(IDatabaseMap<string,string> context,ITokenizer tokenizer)
+
+        public InvertedIndex(IDatabaseMap<string, string> context, ITokenizer tokenizer)
         {
             _context = context;
             _tokenizer = tokenizer;
@@ -24,7 +24,7 @@ namespace SearchEngine
                 Console.WriteLine($"adding {pair.Key}");
                 BuiltinAddDocument(pair.Key, pair.Value, false);
             });
-            
+
             _context.Save();
             return this;
         }
@@ -36,7 +36,7 @@ namespace SearchEngine
 
         private void BuiltinAddDocument(string name, string content, bool saveContext)
         {
-            if(name==null || content==null)
+            if (name == null || content == null)
                 return;
             if (saveContext)
                 _context.Create();
