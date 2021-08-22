@@ -225,6 +225,19 @@ namespace TestProject1
             var result = invertedIndex.Query(new UserInput("thisWordIsTooLongAndThereShouldBeNoMatchDocInOurDatabase"));
             Assert.True(!result.Any());
         }
+
+        [Fact]
+        public void TestClearingIndex()
+        {
+            IFileReader fileReader = Substitute.For<IFileReader>();
+            fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
+            _context.Delete();
+            _context.Create();
+            InvertedIndex invertedIndex = new InvertedIndex(_context, _tokenizer);
+            invertedIndex.AddDocuments(fileReader.ReadingFiles(Path));
+            invertedIndex.ClearIndex();
+            Assert.Empty(invertedIndex.Query(new UserInput("hello")));
+        }
     }
 
     class SimpleDatabase : IDatabaseMap<string, string>
