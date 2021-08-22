@@ -816,3 +816,5 @@ hs_err_pid*
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij+all,intellij,visualstudiocode,visualstudio,csharp,rider
+App.config
+**/docs/*
