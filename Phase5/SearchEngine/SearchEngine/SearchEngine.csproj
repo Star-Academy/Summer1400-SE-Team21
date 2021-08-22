@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+	<PackageId>StarAcademy.Team21.InvertedIndex</PackageId>
+	 <Authors>Ali Nazari,Mohammad Aghaie</Authors>
+	 <Company>Star Academy</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Porter2Stemmer" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>
