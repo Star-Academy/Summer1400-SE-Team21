@@ -19,7 +19,8 @@ namespace WebApi.Services
             else
                 builder.UseInMemoryDatabase("InvertedIndex");
             var context = new InvertedIndexContext(builder.Options);
-            _invertedIndex = new InvertedIndex(context,new Tokenizer());
+            var map = new InvertedIndexMap(context);
+            _invertedIndex = new InvertedIndex(map,new Tokenizer());
         }
         public List<string> Query(string query)
         {
