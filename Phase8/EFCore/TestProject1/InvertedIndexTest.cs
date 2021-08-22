@@ -103,14 +103,6 @@ namespace TestProject1
 
 
         [Fact]
-        public void TokenizerTest()
-        {
-            Tokenizer tokenizer = new Tokenizer();
-            Assert.Empty(tokenizer.Tokenize("123"));
-        }
-        
-        
-        [Fact]
         public void DeleteDictionary()
         {
             InvertedIndexTest indexTest = new InvertedIndexTest();
