@@ -1,9 +1,10 @@
 using System;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
+using SearchEngine;
 using SearchEngine.Interfaces;
 
-namespace SearchEngine
+namespace ConsoleApp
 {
     public class Manager
     {
@@ -32,7 +33,7 @@ namespace SearchEngine
         private void Search(IDatabaseMap<string,string> database)
         {
             var invertedIndex = new InvertedIndex(database);
-            var searchEngine = new SearchEngine(new ConsoleReader(), new ConsoleWriter(), invertedIndex);
+            var searchEngine = new SearchEngine.SearchEngine(new ConsoleReader(), new ConsoleWriter(), invertedIndex);
             Console.WriteLine("start engine");
             searchEngine.Run();
             Console.WriteLine("end engine");
