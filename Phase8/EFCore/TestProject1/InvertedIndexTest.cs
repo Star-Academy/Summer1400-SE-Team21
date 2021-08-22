@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.EntityFrameworkCore;
 using NSubstitute;
-using NSubstitute.Core;
 using SearchEngine;
 using SearchEngine.Interfaces;
 using Xunit;
@@ -106,6 +104,15 @@ namespace TestProject1
             UserInput userInput = new UserInput("dog");
             var files = invertedIndex.Query(userInput);
             Assert.True(!files.Any());
+        }
+
+
+        [Fact]
+        public void DeleteDictionary()
+        {
+            InvertedIndexTest indexTest = new InvertedIndexTest();
+            Assert.True(indexTest._context.Create());
+            Assert.True(indexTest._context.Delete());
         }
         
         

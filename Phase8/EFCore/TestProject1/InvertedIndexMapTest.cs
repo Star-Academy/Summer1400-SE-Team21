@@ -5,15 +5,15 @@ using Xunit;
 
 namespace TestProject1
 {
-    public class InvertedIndexContextTest
+    public class InvertedIndexMaptTest
     {
-        private InvertedIndexContext GetContext()
+        private InvertedIndexMap GetContext()
         {
             var builder = new DbContextOptionsBuilder<InvertedIndexContext>();
             builder.UseInMemoryDatabase("InvertedIndexContext");
-            var context = new InvertedIndexContext(builder.Options);
-            context.Database.EnsureDeleted();
-            return context;
+            var map = new InvertedIndexMap(new InvertedIndexContext(builder.Options));
+            map.Context.Database.EnsureDeleted();
+            return map;
         }
 
         [Fact]
@@ -27,9 +27,15 @@ namespace TestProject1
         public void TestDeleteDatabase()
         {
             var context = GetContext();
-            Assert.False(context.Delete());
             context.Create();
             Assert.True(context.Delete());
+        }
+        
+        [Fact]
+        public void TestDatabaseNotExist()
+        {
+            var context = GetContext();
+            Assert.False(context.Delete());
         }
 
         [Fact]

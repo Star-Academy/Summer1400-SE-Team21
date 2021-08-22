@@ -11,11 +11,11 @@ namespace SearchEngine
 
         public Dictionary<string, string> ReadingFiles(string folderName)
         {
-            ListFilesForFolder(folderName);
+            ListFilesForFolder(folderName,folderName);
             return _fileNameToItsStuffs;
         }
 
-        private void ListFilesForFolder(string path)
+        private void ListFilesForFolder(string path,string root)
         {
             try
             {
@@ -24,10 +24,10 @@ namespace SearchEngine
                     FileAttributes attr = File.GetAttributes(file);
 
                     if (attr.HasFlag(FileAttributes.Directory))
-                        ListFilesForFolder(file);
+                        ListFilesForFolder(file,root);
                     else
                     {
-                        AddFileContent(file);
+                        AddFileContent(file,root);
                     }
                 }
             }
@@ -37,9 +37,9 @@ namespace SearchEngine
             }
         }
 
-        private void AddFileContent(string filePath)
+        private void AddFileContent(string filePath,string root)
         {
-            string fileName = Path.GetFileName(filePath);
+            string fileName = Path.GetRelativePath(root,filePath);
             string[] lines = File.ReadAllLines(filePath);
             string stuffs = "";
             foreach (string line in lines)

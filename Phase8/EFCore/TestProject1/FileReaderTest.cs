@@ -29,8 +29,8 @@ namespace TestProject1
             FileReader fileReader = new FileReader();
             Dictionary<string, string> content = fileReader.ReadingFiles("../../../TestDocs/complexFolder");
             Dictionary<string, string> expected = new Dictionary<string, string>();
-            expected.Add("childFile1.txt","this is childFile1");
-            expected.Add("childFile2.txt","this is childFile2");
+            expected.Add("childFolder/childFile1.txt","this is childFile1");
+            expected.Add("childFolder/childFile2.txt","this is childFile2");
             expected.Add("complexFile1.txt","this is complexFile1");
             expected.Add("complexFile2.txt","this is complexFile2");
             Assert.Equal(expected,content);

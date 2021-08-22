@@ -1,4 +1,4 @@
-﻿namespace SearchEngine
+﻿namespace ConsoleApp
 {
     public class Program
     {
