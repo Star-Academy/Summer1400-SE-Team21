@@ -42,5 +42,10 @@ namespace WebApi.Services
         {
             _invertedIndex.ClearIndex();
         }
+
+        public List<string> GetHints(string hint)
+        {
+            return _invertedIndex.GetHints(hint);
+        }
     }
 }

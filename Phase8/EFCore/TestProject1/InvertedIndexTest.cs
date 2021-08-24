@@ -238,6 +238,25 @@ namespace TestProject1
             invertedIndex.ClearIndex();
             Assert.Empty(invertedIndex.Query(new UserInput("hello")));
         }
+
+        [Fact]
+        public void TestHint()
+        {
+            var docs = new Dictionary<string, string>
+            {
+                { "1", "hello how are you" },
+                { "2", "hell is not a good place" }
+            };
+            _context.Delete();
+            _context.Create();
+            var invertedIndex = new InvertedIndex(_context, _tokenizer);
+            invertedIndex.AddDocuments(docs);
+            var expected = new List<string>
+            {
+                "hello", "hell"
+            };
+            Assert.Equal(expected,invertedIndex.GetHints("hell"));
+        }
     }
 
     class SimpleDatabase : IDatabaseMap<string, string>
@@ -284,6 +303,11 @@ namespace TestProject1
 
         public void Save()
         {
+        }
+
+        public List<string> GetHints(string hint)
+        {
+            return _dictionary.Keys.Where(word => word.StartsWith(hint)).ToList();
         }
     }
 }

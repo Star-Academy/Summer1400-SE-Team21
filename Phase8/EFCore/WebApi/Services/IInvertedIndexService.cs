@@ -8,5 +8,6 @@ namespace WebApi.Services
         void AddDocument(string name, string content);
         void AddDocuments(Dictionary<string, string> fileContents);
         void ClearIndex();
+        List<string> GetHints(string word);
     }
 }

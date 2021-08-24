@@ -65,5 +65,10 @@ namespace SearchEngine
         {
             Context.SaveChanges();
         }
+
+        public List<string> GetHints(string hint)
+        {
+            return Context.Words.Where(word => word.String.StartsWith(hint)).Select(word => word.String).ToList();
+        }
     }
 }
