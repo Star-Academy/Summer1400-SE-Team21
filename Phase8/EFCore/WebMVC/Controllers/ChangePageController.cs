@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebMVC.Services;
 
 namespace WebMVC.Controllers
@@ -17,6 +16,7 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult Query(string query)
         {
+            ViewBag.Query = _invertedIndex.Query(query);
             return View();
         }
     }

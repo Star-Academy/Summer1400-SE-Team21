@@ -2,19 +2,66 @@
 
 @{
     Layout = null;
+    var myList = (List<string>) ViewBag.Query;
 }
 
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <title>title</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/ResultPage/ShowingSentence.css">
 </head>
 <body>
-<div>
-    <h1>
-        Hello
-    </h1>
-</div>
+    
+<section id="mySec" class="sec">
+    <video autoplay muted loop>
+
+        @if (myList.Count == 0)
+        {
+            <source src="~/ResultPage/Error.mp4" type="video/mp4"/>
+            myList.Add("No Doc Found");
+        }
+        else
+        {
+            <source src="~/ResultPage/BackSearch.mp4" type="video/mp4"/>
+        }
+
+
+    </video>
+    
+    @for (int i = 0; i < myList.Count; ++i)
+    {
+        <h6>@myList[i]</h6>
+    }
+    
+    <div id="myDot" class="dot" onClick="change()">
+
+    </div>
+</section>
+
+
+
+<script>
+
+        function change() {
+            if (document.getElementById('myDot').classList.contains('active')){
+                document.getElementById('myDot').classList.remove('active');
+                document.getElementById('mySec').classList.remove('active');
+            }
+            else{
+                document.getElementById('myDot').classList.add('active');
+                document.getElementById('mySec').classList.add('active');
+            }
+        }
+
+        document.addEventListener('mousemove', function(e){
+            const dot = document.querySelector('.dot');
+            dot.style.left = e.pageX + 'px';
+            dot.style.top = e.pageY + 'px';
+        })
+</script>
 </body>
 </html>
