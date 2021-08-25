@@ -9,5 +9,6 @@ namespace SearchEngine.Interfaces
         bool Delete();
         bool Create();
         void Save();
+        List<K> GetHints(string hint);
     }
 }

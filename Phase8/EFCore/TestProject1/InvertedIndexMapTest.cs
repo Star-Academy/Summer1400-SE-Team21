@@ -89,5 +89,20 @@ namespace TestProject1
             var expected = new List<string> { document1, document2 };
             Assert.Equal(expected, context.Get(word));
         }
+
+        [Fact]
+        public void TestHints()
+        {
+            var context = GetContext();
+            context.Create();
+            context.Add("hello","1");
+            context.Add("hell","2");
+            context.Save();
+            var expected = new List<string>
+            {
+                "hello", "hell"
+            };
+            Assert.Equal(expected,context.GetHints("he"));
+        }
     }
 }

@@ -66,6 +66,11 @@ namespace SearchEngine
             _context.Create();
         }
 
+        public List<string> GetHints(string hint)
+        {
+            return _context.GetHints(hint);
+        }
+
         private SortedSet<string> RemoveWordFromResult(string word, SortedSet<string> result)
         {
             List<string> wordList = GetDocsContainWord(word);

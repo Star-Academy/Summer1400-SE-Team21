@@ -36,5 +36,11 @@ namespace WebApi.Controllers
             _invertedIndex.ClearIndex();
             return Ok();
         }
+
+        [HttpGet]
+        public IActionResult GetHints(string hint)
+        {
+            return Ok(_invertedIndex.GetHints(hint));
+        }
     }
 }
