@@ -42,5 +42,6 @@ function clean (){
 }
 
 function changePage123 (){
-    window.open("https://localhost:5001/ChangePage/Query?query=" + document.getElementById('search').value,"_self");
+    this.closest('form').submit();
+    //window.open("https://localhost:5001/ChangePage/Query?query=" + document.getElementById('search').value,"_self");
 }
