@@ -41,8 +41,6 @@ function clean (){
     document.getElementById("searchError").innerHTML = "";
 }
 
-function changePage (){
-    const xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", "https://localhost:5001/ChangePage/Query?query=" + document.getElementById("search").value);
-    xmlhttp.send();
+function changePage123 (){
+    window.open("https://localhost:5001/ChangePage/Query?query=" + document.getElementById('search').value,"_self");
 }

@@ -17,7 +17,6 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult Query(string query)
         {
-            Console.WriteLine(query);
             return View();
         }
     }
