@@ -25,7 +25,7 @@ namespace WebMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddSingleton(typeof(IInvertedIndexService), new InvertedIndexService());
+            services.AddScoped<IInvertedIndexService,InvertedIndexService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
