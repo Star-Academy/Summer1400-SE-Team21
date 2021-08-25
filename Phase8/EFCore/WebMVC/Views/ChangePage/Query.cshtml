@@ -13,10 +13,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="~/ResultPage/ShowingSentence.css">
+    <link rel="stylesheet" href="~/ResultPage/navbar.css">
 </head>
 <body>
-    
-<section id="mySec" class="sec">
     <video autoplay muted loop>
 
         @if (myList.Count == 0)
@@ -31,12 +30,45 @@
 
 
     </video>
-    
+
+
+<div>
+    <div class="card">
+        <div class="content">
+            <div class="imgBx">
+                <img src="~/ResultPage/SearchEngine.png">
+            </div>
+            <h2>
+                SearchEngine
+                <br>
+                <span>
+                    Navbar
+                </span>
+            </h2>
+        </div>
+        <ul class="navigation">
+            <li>
+                <a href="https://localhost:5001/Main/index.html">
+                    <ion-icon name="settings-outline"></ion-icon>
+                    Back To Search Tab
+                </a>
+            </li>
+        </ul>
+        <div class="toggle">
+            <ion-icon name="chevron-down-outline"></ion-icon>
+        </div>
+    </div>
+</div>
+
+<section id="mySec" class="sec">
+
+
+
     @for (int i = 0; i < myList.Count; ++i)
     {
         <h6>@myList[i]</h6>
     }
-    
+
     <div id="myDot" class="dot" onClick="change()">
 
     </div>
@@ -45,6 +77,11 @@
 
 
 <script>
+        const card = document.querySelector('.card');
+        const cardToggle = document.querySelector('.toggle');
+        cardToggle.onclick = function(){
+            card.classList.toggle('active');
+        }
 
         function change() {
             if (document.getElementById('myDot').classList.contains('active')){
@@ -59,9 +96,11 @@
 
         document.addEventListener('mousemove', function(e){
             const dot = document.querySelector('.dot');
-            dot.style.left = e.pageX + 'px';
-            dot.style.top = e.pageY + 'px';
         })
 </script>
+
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
