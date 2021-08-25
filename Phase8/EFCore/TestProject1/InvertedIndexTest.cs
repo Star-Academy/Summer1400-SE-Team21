@@ -11,7 +11,7 @@ namespace TestProject1
     public class InvertedIndexTest
     {
         private const string Path = "../../../TestDocs/DocsForTest";
-        private IDatabaseMap<string,string> _context;
+        private IDatabaseMap<string, string> _context;
         private ITokenizer _tokenizer;
 
         public InvertedIndexTest()
@@ -36,7 +36,8 @@ namespace TestProject1
                 return set;
             });
             tokenizer.Tokenize("Hello Everyone This Is Just For Test Hello! a cat is here").Returns(
-                new SortedSet<string>{"Hello","Everyone","This","Is","Just","For","Test","Hello","a","cat","is","here"}
+                new SortedSet<string>
+                    { "Hello", "Everyone", "This", "Is", "Just", "For", "Test", "Hello", "a", "cat", "is", "here" }
             );
             return tokenizer;
         }
@@ -46,29 +47,36 @@ namespace TestProject1
         {
             var toReturn = new Dictionary<string, string>
             {
-                {"firstFile", "Hello Everyone This Is Just For Test Hello! a cat is here"}
+                { "firstFile", "Hello Everyone This Is Just For Test Hello! a cat is here" }
             };
             return toReturn;
         }
-        
-        
+
+
         [Fact]
         public void InvertedIndexSimpleTest()
         {
             IFileReader fileReader = Substitute.For<IFileReader>();
             fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
-            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex(_context).AddDocuments(fileReader.ReadingFiles(Path),_tokenizer);
+            InvertedIndex invertedIndex =
+                (InvertedIndex)new InvertedIndex(_context, _tokenizer).AddDocuments(fileReader.ReadingFiles(Path));
 
             Assert.Contains("firstFile", invertedIndex.GetDocsContainWord("hello"));
             Assert.Empty(invertedIndex.GetDocsContainWord("ali"));
         }
-        
-        
+
+
         [Fact]
-        public void QueryTestSimpleTest_ForStableState_CheckingFirstFileForWord (){
+        public void QueryTestSimpleTest_ForStableState_CheckingFirstFileForWord()
+        {
+            _context.Create();
+            _context.Delete();
             IFileReader fileReader = Substitute.For<IFileReader>();
             fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
-            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex(_context).AddDocuments(fileReader.ReadingFiles(Path),_tokenizer);
+            InvertedIndex invertedIndex =
+                (InvertedIndex)new InvertedIndex(_context, _tokenizer).AddDocuments(fileReader.ReadingFiles(Path));
+            invertedIndex.AddDocument(null, "and an empty doc");
+            invertedIndex.AddDocument("notImportant", "nope");
 
             UserInput userInput = new UserInput("everyone");
             SortedSet<string> files = invertedIndex.Query(userInput);
@@ -76,25 +84,29 @@ namespace TestProject1
             Assert.Equal("firstFile", files.ToList()[0]);
             Assert.Single(files);
         }
-        
-        
+
+
         [Fact]
-        public void QueryTest_ForStableState_CheckingEmptyResult (){
+        public void QueryTest_ForStableState_CheckingEmptyResult()
+        {
             IFileReader fileReader = Substitute.For<IFileReader>();
             fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
-            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex(_context).AddDocuments(fileReader.ReadingFiles(Path),_tokenizer);
+            InvertedIndex invertedIndex =
+                (InvertedIndex)new InvertedIndex(_context, _tokenizer).AddDocuments(fileReader.ReadingFiles(Path));
 
             UserInput userInput = new UserInput("everyone +hello everyone -cat");
             var files = invertedIndex.Query(userInput);
             Assert.True(!files.Any());
         }
-        
-        
+
+
         [Fact]
-        public void QueryTest_CheckingSimpleQuery (){
+        public void QueryTest_CheckingSimpleQuery()
+        {
             IFileReader fileReader = Substitute.For<IFileReader>();
             fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
-            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex(_context).AddDocuments(fileReader.ReadingFiles(Path),_tokenizer);
+            InvertedIndex invertedIndex =
+                (InvertedIndex)new InvertedIndex(_context, _tokenizer).AddDocuments(fileReader.ReadingFiles(Path));
 
             UserInput userInput = new UserInput("dog");
             var files = invertedIndex.Query(userInput);
@@ -109,109 +121,129 @@ namespace TestProject1
             Assert.True(indexTest._context.Create());
             Assert.True(indexTest._context.Delete());
         }
-        
-        
+
+
         [Fact]
-        public void PositiveTest (){
+        public void PositiveTest()
+        {
             IFileReader fileReader = Substitute.For<IFileReader>();
             fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
-            InvertedIndex invertedIndex = (InvertedIndex)new InvertedIndex(_context).AddDocuments(fileReader.ReadingFiles(Path),_tokenizer);
+            InvertedIndex invertedIndex =
+                (InvertedIndex)new InvertedIndex(_context, _tokenizer).AddDocuments(fileReader.ReadingFiles(Path));
 
             UserInput userInput = new UserInput("+elephant");
             var files = invertedIndex.Query(userInput);
             Assert.True(!files.Any());
         }
-        
-        
+
+
         [Fact]
-        public void MinusTest (){
+        public void MinusTest()
+        {
             IFileReader fileReader = Substitute.For<IFileReader>();
             fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
-            IInvertedIndex invertedIndex = new InvertedIndex(_context).AddDocuments(fileReader.ReadingFiles(Path),_tokenizer);
+            IInvertedIndex invertedIndex =
+                new InvertedIndex(_context, _tokenizer).AddDocuments(fileReader.ReadingFiles(Path));
 
             UserInput userInput = new UserInput("-elephant");
             var files = invertedIndex.Query(userInput);
             Assert.True(!files.Any());
         }
-        
-        
+
+
         [Fact]
-        public void EmptyTest (){
+        public void EmptyTest()
+        {
             IFileReader fileReader = Substitute.For<IFileReader>();
             fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
-            IInvertedIndex invertedIndex = new InvertedIndex(_context).AddDocuments(fileReader.ReadingFiles(Path),_tokenizer);
+            IInvertedIndex invertedIndex =
+                new InvertedIndex(_context, _tokenizer).AddDocuments(fileReader.ReadingFiles(Path));
 
             UserInput userInput = new UserInput(" ");
             var files = invertedIndex.Query(userInput);
             Assert.True(!files.Any());
         }
-        
+
         [Fact]
         public void TestSimpleInvertedIndex()
         {
-            InvertedIndex invertedIndex = new InvertedIndex(_context);
-            invertedIndex.AddDocuments(new FileReader().ReadingFiles("../../../TestDocs/testDocs"),_tokenizer);
+            InvertedIndex invertedIndex = new InvertedIndex(_context, _tokenizer);
+            invertedIndex.AddDocuments(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
             var queryResult = invertedIndex.Query(new UserInput("Cause +People -pretty"));
-            var expected = new SortedSet<string>() {"59631.txt", "59635.txt", "59639.txt", "59648.txt"};
+            var expected = new SortedSet<string>() { "59631.txt", "59635.txt", "59639.txt", "59648.txt" };
             Assert.Equal(expected, queryResult);
         }
-        
-        
+
+
         [Fact]
         public void TestJustAndQuery()
         {
-            InvertedIndex invertedIndex = new InvertedIndex(_context);
-            invertedIndex.AddDocuments(new FileReader().ReadingFiles("../../../TestDocs/testDocs"),_tokenizer);
+            InvertedIndex invertedIndex = new InvertedIndex(_context, _tokenizer);
+            invertedIndex.AddDocuments(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
             var result = invertedIndex.Query(new UserInput("Cause People pretty"));
             Assert.True(!result.Any());
         }
-        
-        
+
+
         [Fact]
         public void TestJustOrQuery()
         {
-            InvertedIndex invertedIndex = new InvertedIndex(_context);
-            invertedIndex.AddDocuments(new FileReader().ReadingFiles("../../../TestDocs/testDocs"),_tokenizer);
+            InvertedIndex invertedIndex = new InvertedIndex(_context, _tokenizer);
+            invertedIndex.AddDocuments(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
             var queryResult = invertedIndex.Query(new UserInput("+Cause +People +pretty"));
-            var expected = new SortedSet<string>() 
-                {"59631.txt", "59632.txt", "59633.txt", "59635.txt", "59637.txt", "59639.txt", "59648.txt"};
-            Assert.Equal(expected,queryResult);
+            var expected = new SortedSet<string>()
+                { "59631.txt", "59632.txt", "59633.txt", "59635.txt", "59637.txt", "59639.txt", "59648.txt" };
+            Assert.Equal(expected, queryResult);
         }
-        
-        
+
+
         [Fact]
         public void TestJustRemoveQuery()
         {
-            InvertedIndex invertedIndex = new InvertedIndex(_context);
-            invertedIndex.AddDocuments(new FileReader().ReadingFiles("../../../TestDocs/testDocs"),_tokenizer);
+            InvertedIndex invertedIndex = new InvertedIndex(_context, _tokenizer);
+            invertedIndex.AddDocuments(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
             var result = invertedIndex.Query(new UserInput("-Cause -People -pretty"));
             Assert.True(!result.Any());
         }
-        
-        
+
+
         [Fact]
         public void TestEmptyQuery()
         {
-            InvertedIndex invertedIndex = new InvertedIndex(_context);
-            invertedIndex.AddDocuments(new FileReader().ReadingFiles("../../../TestDocs/testDocs"),_tokenizer);
+            InvertedIndex invertedIndex = new InvertedIndex(_context, _tokenizer);
+            invertedIndex.AddDocuments(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
             var result = invertedIndex.Query(new UserInput(""));
             Assert.True(!result.Any());
         }
-        
-        
+
+
         [Fact]
         public void TestLongQuery()
         {
-            InvertedIndex invertedIndex = new InvertedIndex(_context);
-            invertedIndex.AddDocuments(new FileReader().ReadingFiles("../../../TestDocs/testDocs"),_tokenizer);
+            InvertedIndex invertedIndex = new InvertedIndex(_context, _tokenizer);
+            invertedIndex.AddDocuments(new FileReader().ReadingFiles("../../../TestDocs/testDocs"));
             var result = invertedIndex.Query(new UserInput("thisWordIsTooLongAndThereShouldBeNoMatchDocInOurDatabase"));
             Assert.True(!result.Any());
         }
+
+        [Fact]
+        public void TestClearingIndex()
+        {
+            IFileReader fileReader = Substitute.For<IFileReader>();
+            fileReader.ReadingFiles(Path).Returns(ReturningDictionary());
+            _context.Delete();
+            _context.Create();
+            InvertedIndex invertedIndex = new InvertedIndex(_context, _tokenizer);
+            invertedIndex.AddDocuments(fileReader.ReadingFiles(Path));
+            invertedIndex.ClearIndex();
+            Assert.Empty(invertedIndex.Query(new UserInput("hello")));
+        }
     }
 
-    class SimpleDatabase : IDatabaseMap<string,string>
+    class SimpleDatabase : IDatabaseMap<string, string>
     {
         private Dictionary<string, SortedSet<string>> _dictionary;
+
         public List<string> Get(string key)
         {
             if (_dictionary.ContainsKey(key))
@@ -225,7 +257,7 @@ namespace TestProject1
             if (_dictionary.ContainsKey(key))
                 _dictionary[key].Add(value);
             else
-                _dictionary.Add(key,new SortedSet<string>{value});
+                _dictionary.Add(key, new SortedSet<string> { value });
         }
 
         public bool Delete()

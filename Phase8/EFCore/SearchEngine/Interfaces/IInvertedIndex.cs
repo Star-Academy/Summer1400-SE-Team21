@@ -4,7 +4,9 @@ namespace SearchEngine.Interfaces
 {
     public interface IInvertedIndex
     {
-        IInvertedIndex AddDocuments(Dictionary<string, string> allDocuments,ITokenizer tokenizer);
+        IInvertedIndex AddDocuments(Dictionary<string, string> allDocuments);
+        void AddDocument(string word, string content);
         SortedSet<string> Query(IUserInput input);
+        void ClearIndex();
     }
 }

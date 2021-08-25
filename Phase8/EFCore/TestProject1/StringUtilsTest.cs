@@ -30,7 +30,7 @@ namespace TestProject1
             var toBeProcess = new SortedSet<string> { "cats", "this", "hello", "helpful" };
             var processedWords = StringUtils.ProcessRawTokens(toBeProcess);
             var expected = new SortedSet<string> { "cat", "hello", "help" };
-            Assert.Equal(expected,processedWords);
+            Assert.Equal(expected, processedWords);
         }
     }
 }

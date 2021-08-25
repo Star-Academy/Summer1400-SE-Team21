@@ -25,6 +25,7 @@ namespace SearchEngine
                 {
                     break;
                 }
+
                 UserInput userInput = new UserInput(input);
                 SortedSet<string> containingDocs = _invertedIndex.Query(userInput);
                 if (containingDocs.Count == 0)

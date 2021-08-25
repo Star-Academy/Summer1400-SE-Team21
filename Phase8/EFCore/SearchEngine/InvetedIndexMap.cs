@@ -5,7 +5,7 @@ using SearchEngine.Interfaces;
 
 namespace SearchEngine
 {
-    public class InvertedIndexMap : IDatabaseMap<string,string>
+    public class InvertedIndexMap : IDatabaseMap<string, string>
 
     {
         public readonly InvertedIndexContext Context;
@@ -23,6 +23,7 @@ namespace SearchEngine
             {
                 return new List<string>();
             }
+
             return word.Documents.Select(document => document.Name).ToList();
         }
 
@@ -46,6 +47,7 @@ namespace SearchEngine
             {
                 return;
             }
+
             word.Documents.Add(document);
         }
 

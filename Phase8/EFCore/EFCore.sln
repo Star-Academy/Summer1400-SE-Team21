@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchEngine", "SearchEngin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{6CF2E967-623F-44BC-8A0C-00D43CF7F046}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{F009DD0F-115D-49D5-AA05-ED1246019C0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,5 +60,17 @@ Global
 		{6CF2E967-623F-44BC-8A0C-00D43CF7F046}.Release|x64.Build.0 = Release|Any CPU
 		{6CF2E967-623F-44BC-8A0C-00D43CF7F046}.Release|x86.ActiveCfg = Release|Any CPU
 		{6CF2E967-623F-44BC-8A0C-00D43CF7F046}.Release|x86.Build.0 = Release|Any CPU
+		{F009DD0F-115D-49D5-AA05-ED1246019C0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F009DD0F-115D-49D5-AA05-ED1246019C0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F009DD0F-115D-49D5-AA05-ED1246019C0D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F009DD0F-115D-49D5-AA05-ED1246019C0D}.Debug|x64.Build.0 = Debug|Any CPU
+		{F009DD0F-115D-49D5-AA05-ED1246019C0D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F009DD0F-115D-49D5-AA05-ED1246019C0D}.Debug|x86.Build.0 = Debug|Any CPU
+		{F009DD0F-115D-49D5-AA05-ED1246019C0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F009DD0F-115D-49D5-AA05-ED1246019C0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F009DD0F-115D-49D5-AA05-ED1246019C0D}.Release|x64.ActiveCfg = Release|Any CPU
+		{F009DD0F-115D-49D5-AA05-ED1246019C0D}.Release|x64.Build.0 = Release|Any CPU
+		{F009DD0F-115D-49D5-AA05-ED1246019C0D}.Release|x86.ActiveCfg = Release|Any CPU
+		{F009DD0F-115D-49D5-AA05-ED1246019C0D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
